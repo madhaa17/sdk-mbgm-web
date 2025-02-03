@@ -2,18 +2,13 @@ import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
 
 import React, { useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Popup,
-  CircleMarker,
-  Marker,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/school";
 import { SchoolList } from "@/type";
 import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
+
 
 interface MapSchoolProps {
   data: SchoolList[];
@@ -38,6 +33,7 @@ const MapSchool = (props: MapSchoolProps) => {
 
   const position = [-2.5489, 118.0149];
 
+  
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<any>(null);
 

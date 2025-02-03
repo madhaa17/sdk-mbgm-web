@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { SchoolList } from "@/type";
+import { useSearchParams } from "next/navigation";
 // import { useState, useEffect, useMemo } from "react";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
@@ -26,9 +27,14 @@ const MapClinic = dynamic(() => import("@/components/maps/map-clinic"), {
 export default function Home() {
   const { activeTab, setActiveTab } = useTabStore();
 
+  const searchParams = useSearchParams();
+  const limitParams = searchParams.get("limit");
+
+  console.log({ limitParams });
+
   const { data: schools, isLoading: schoolsLoading } = useQuery({
-    queryKey: ["schools"],
-    queryFn: () => school.get(),
+    queryKey: ["schools", limitParams],
+    queryFn: () => school.get("", limitParams || ""),
   });
 
   const Search = () => {
