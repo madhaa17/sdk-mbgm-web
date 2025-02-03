@@ -9,41 +9,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const imt_chart = [
-  {
-    date: "Okt 2024",
-    imt_kurus_ringan: "193",
-    imt_kurus_berat: "127",
-    imt_normal: "657",
-    imt_gemuk_ringan: "49",
-    imt_obesitas: "73",
-  },
-  {
-    date: "Des 2024",
-    imt_kurus_ringan: "193",
-    imt_kurus_berat: "127",
-    imt_normal: "657",
-    imt_gemuk_ringan: "49",
-    imt_obesitas: "73",
-  },
-  {
-    date: "Jan 2025",
-    imt_kurus_ringan: "193",
-    imt_kurus_berat: "127",
-    imt_normal: "657",
-    imt_gemuk_ringan: "49",
-    imt_obesitas: "73",
-  },
-  {
-    date: "Feb 2025",
-    imt_kurus_ringan: "193",
-    imt_kurus_berat: "127",
-    imt_normal: "657",
-    imt_gemuk_ringan: "49",
-    imt_obesitas: "73",
-  },
-];
-
 const chartConfig = {
   imt_kurus_ringan: {
     label: "Kurus Ringan",
@@ -67,8 +32,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ChartImt = () => {
-  const chartData = imt_chart.map((item) => ({
+const ChartImt = ({ data }: { data: schoolDetail }) => {
+  const chartData = data.imt_chart.map((item) => ({
     ...item,
     imt_kurus_ringan: Number(item.imt_kurus_ringan),
     imt_kurus_berat: Number(item.imt_kurus_berat),

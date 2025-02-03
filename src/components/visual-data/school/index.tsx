@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { school } from "@/models/school";
+import toast from "react-hot-toast";
+import { schoolDetail } from "@/type";
 
 interface VisualDataProps {
   open: boolean;
@@ -18,9 +20,12 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
   onOpenChange,
   item,
 }) => {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["school", item],
-    queryFn: () => school.getDetail(item),
+    queryFn: () =>
+      school
+        .getDetail(item)
+        .catch(() => toast.error("Detail info belum tersedia!")),
     enabled: !!item,
   });
 
@@ -28,28 +33,24 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
     <>
       {open && (
         <>
-          {isLoading ? (
-            <></>
-          ) : (
-            data && (
-              <>
-                <div className="fixed z-20 top-4 left-5 h-[calc(100%-2rem)] w-[438px]">
-                  <div className="flex flex-col justify-between gap-5 h-full">
-                    <ModalSchool data={data} />
-                    <CardAllergy data={data} />
-                  </div>
+          {data && (
+            <>
+              <div className="fixed z-20 top-4 left-5 h-[calc(100%-2rem)] w-[438px]">
+                <div className="flex flex-col justify-between gap-5 h-full">
+                  <ModalSchool data={data as schoolDetail} />
+                  <CardAllergy data={data as schoolDetail} />
                 </div>
-                <Button
-                  onClick={() => onOpenChange(false)}
-                  variant={"destructive"}
-                  className="font-medium fixed z-20 top-4 left-[25%] ">
-                  <X className="h-4 w-4" />
-                </Button>
-                <div className="fixed z-20 !bottom-5 right-5 h-[calc(50%-13.4rem)] w-[74%] ">
-                  <ChartImt />
-                </div>
-              </>
-            )
+              </div>
+              <Button
+                onClick={() => onOpenChange(false)}
+                variant={"destructive"}
+                className="font-medium fixed z-20 top-4 left-[25%] ">
+                <X className="h-4 w-4" />
+              </Button>
+              <div className="fixed z-20 !bottom-5 right-5 h-[calc(50%-13.4rem)] w-[74%] ">
+                <ChartImt data={data as schoolDetail} />
+              </div>
+            </>
           )}
         </>
       )}

@@ -1,24 +1,43 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { dummyData } from "@/dummy";
-import VisualData from "../visual-data/kitchen";
+import "react-leaflet-markercluster/styles";
 
-const getMarkerColor = (totalImtNormalPct: number) => {
-  if (totalImtNormalPct <= 0.5) {
-    return "red";
-  } else if (totalImtNormalPct > 0.5 && totalImtNormalPct <= 0.7) {
-    return "orange";
-  } else {
-    return "green";
-  }
-};
+import React, { useCallback, useState } from "react";
+import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import VisualData from "../visual-data/kitchen";
+import { parseCoordinates } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { debounce } from "lodash";
+import Search from "../search";
+import { kitchen } from "@/models/kitchen";
 
 const MapKitchen = () => {
-  const position = [-2.5489, 118.0149];
+  const [query, setQuery] = useState("");
 
+  const searchParams = useSearchParams();
+  const limitParams = searchParams.get("limit");
+
+  const { data } = useQuery({
+    queryKey: ["kitchens", query, limitParams],
+    queryFn: () => kitchen.get(query, limitParams || ""),
+  });
+
+  const position = [-2.5489, 118.0149];
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<any>(null);
+
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setQuery(value);
+    }, 3000),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   const handleOpen = (item: any) => {
     setItem(item);
@@ -41,44 +60,41 @@ const MapKitchen = () => {
         center={position}
         zoom={5}
         zoomControl={false}
+        className="markercluster-map"
         style={{ height: "100vh", width: "100%", zIndex: 0 }}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {dummyData.map((item) => {
-          let label;
-          const imtPct = item.imt_data.total_imt_normal_pct;
 
-          if (imtPct <= 0.5) {
-            label = "BAD";
-          } else if (imtPct > 0.5 && imtPct <= 0.7) {
-            label = "NORMAL";
-          } else {
-            label = "GOOD";
-          }
-
-          const color = getMarkerColor(imtPct);
-
-          return (
-            <CircleMarker
-              key={item.school_npsn}
-              center={[
-                item.imt_data.coordinate.lat,
-                item.imt_data.coordinate.lng,
-              ]}
-              radius={10}
-              color={color}
-              fillColor={color}
-              fillOpacity={0.6}
-              eventHandlers={{
-                click: () => handleMarkerClick(item),
-              }}
-            />
-          );
-        })}
+        <MarkerClusterGroup>
+          {data?.map((item) => {
+            return (
+              <CircleMarker
+                key={item.id}
+                center={parseCoordinates(item.kitchen_coordinate)}
+                radius={10}
+                color={"green"}
+                fillColor={"green"}>
+                <Popup>
+                  <div>
+                    <p>{item.kitchen_name}</p>
+                    <p>{item.kitchen_province}</p>
+                    <p>{item.kitchen_address}</p>
+                  </div>
+                  <Button
+                    onClick={() => handleMarkerClick(item.id)}
+                    className="w-full">
+                    Detail Info
+                  </Button>
+                </Popup>
+              </CircleMarker>
+            );
+          })}
+        </MarkerClusterGroup>
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
+      <Search handleChange={handleSearchChange} />
     </>
   );
 };

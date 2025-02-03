@@ -1,32 +1,19 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { KitchenDetail } from "@/type";
 
-const schoolData = {
-  school_name: "SEKOLAH MUHAMMADIYAH DARUL ARQAM (SMP / SMA) GARUT",
-  school_npsn: "1234567890",
-  school_category: "Negeri",
-  school_type: "SD",
-  school_address: "Jl. Merdeka No.1, Jakarta",
-  school_province: "DKI Jakarta",
-  school_city: "Jakarta Pusat",
-  school_district: "Gambir",
-  school_subdistrict: "Merdeka",
-  school_telp: "+6221-12345678",
-  school_email: "sd01@jakarta.sch.id",
-};
+const CardKitchen = ({ data }: { data: KitchenDetail }) => {
+  console.log({ data });
 
-const CardKitchen = () => {
   return (
     <Card className="w-full h-full bg-card/70 rounded-2xl">
       <CardHeader>
-        <CardTitle>DAPUR MUHAMMADIYAH DARUL ARQAM</CardTitle>
+        <CardTitle>{data.kitchen_name}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-1">
-          <p>{schoolData.school_address}</p>
-          <p>{schoolData.school_email}</p>
-          <p>{schoolData.school_telp}</p>
+          <p>{data.kitchen_address}</p>
         </div>
 
         <div className="flex gap-1">
@@ -44,33 +31,34 @@ const CardKitchen = () => {
           />
         </div>
 
+        <div className="flex items-center gap-2">
+          <p>Rating: {data.kitchen_rating}/5 </p>
+          <Image
+            className="mb-1"
+            src={"/assets/icons/star.png"}
+            width={14}
+            height={16}
+            alt="rating icon"
+          />
+        </div>
+
         <div className="space-y-3">
           <h2 className="font-medium text-xl">Kapasitas Dapur</h2>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>Jumlah Porsi</div> <div>: 3000 Porsi</div>
-            <div>Jumlah Siswa</div> <div>: 3000 Siswa</div>
-            <div>Jumlah SKU</div> <div>: 100 SKU</div>
+            <div>Jumlah Porsi</div>{" "}
+            <div>: {data.kitchen_capacity_food} Porsi</div>
+            <div>Jumlah Siswa</div>{" "}
+            <div>: {data.kitchen_capacity_student} Siswa</div>
+            <div>Jumlah SKU</div> <div>: {data.kitchen_capacity_sku} SKU</div>
           </div>
         </div>
 
         <div className="space-y-3">
           <h2 className="font-medium text-xl">Daftar Sekolah</h2>
           <div className="space-y-2">
-            <p>
-              Sekolah Muhammadiyah Darul Arqam (SD) 1000 Siswa - Jl. Darul Arqam
-            </p>
-            <p>
-              Sekolah Muhammadiyah Darul Arqam (SD) 1000 Siswa - Jl. Darul Arqam
-            </p>
-            <p>
-              Sekolah Muhammadiyah Darul Arqam (SD) 1000 Siswa - Jl. Darul Arqam
-            </p>
-            <p>
-              Sekolah Muhammadiyah Darul Arqam (SD) 1000 Siswa - Jl. Darul Arqam
-            </p>
-            <p>
-              Sekolah Muhammadiyah Darul Arqam (SD) 1000 Siswa - Jl. Darul Arqam
-            </p>
+            {data?.school_list?.map((school, idx) => {
+              return <p key={idx}>{school.school_name}</p>;
+            })}
           </div>
         </div>
       </CardContent>

@@ -67,3 +67,95 @@ export interface schoolDetail {
   imt_pct: string;
   imt_chart: ImtChartType[];
 }
+
+export interface KitchenList {
+  id: number;
+  kitchen_address: string;
+  kitchen_province: string;
+  kitchen_city: string;
+  kitchen_subdistrict: string;
+  kitchen_coordinate: string;
+  kitchen_name: string;
+  kitchen_rating: number;
+  kitchen_capacity_food: number;
+  kitchen_capacity_student: number;
+  kitchen_capacity_sku: number;
+  kitchen_school_ids: number;
+}
+
+interface SchoolType {
+  school_location_id: number;
+  school_address: string;
+  school_category: string;
+  school_npsn: string;
+  school_phone: string;
+  school_detail_id: number;
+  school_name: string;
+  total_student: number;
+  total_male: number;
+  total_female: number;
+  b_a1_egg: number;
+  b_a1_cow_milk: number;
+  b_a1_seafood: number;
+  b_a1_red_meat: number;
+  b_a2_fruit: number;
+  b_a2_vegetable: number;
+  b_a2_latex_fruit: number;
+  b_a3_sesame: number;
+  b_a3_herbs_spices: number;
+  b_a4_food_color: number;
+  b_a4_food_preservative: number;
+  b_a4_artificial_flavors: number;
+  b_a5_chocolate: number;
+  b_a5_breads_cakes: number;
+  b_a5_food_instant: number;
+  b_vegan: number;
+  imt_kurus_berat: number;
+  imt_kurus_ringan: number;
+  imt_normal: number;
+  imt_gemuk_ringan: number;
+  imt_obesitas: number;
+  imt_pct: number;
+}
+
+export interface KitchenBatchType {
+  id: number;
+  kitchen_location_id: number;
+  batch_name: string;
+  batch_school_ids: string;
+  step_pemorsian_a1: number;
+  step_pemorsian_a2: number;
+  step_pemorsian_a3: number;
+  step_distribusi_b1: number;
+  step_distribusi_b2: number;
+  step_akhir_c1: number;
+  step_akhir_c2: number;
+  menu_karbo: string;
+  menu_protein: string;
+  menu_serat: string;
+  menu_vitamin: string;
+  menu_mineral: string;
+  pemorsian_start_at: string | null;
+  pemorsian_end_at: string | null;
+  distribusi_start_at: string | null;
+  distribusi_end_at: string | null;
+  akhir_start_at: string | null;
+  akhir_end_at: string | null;
+}
+
+export interface KitchenDetail {
+  id: number;
+  kitchen_address: string;
+  kitchen_province: string;
+  kitchen_city: string;
+  kitchen_subdistrict: string;
+  kitchen_coordinate: string;
+  kitchen_name: string;
+  kitchen_rating: number;
+  kitchen_capacity_food: number;
+  kitchen_capacity_student: number;
+  kitchen_capacity_sku: number;
+  kitchen_school_ids: string;
+  school_list: SchoolType[];
+  kitchen_batchs: KitchenBatchType[];
+}

@@ -1,17 +1,17 @@
 import "leaflet/dist/leaflet.css";
 import "react-leaflet-markercluster/styles";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/school";
-import { SchoolList } from "@/type";
 import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
-
-interface MapSchoolProps {
-  data: SchoolList[];
-}
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { school } from "@/models/school";
+import { debounce } from "lodash";
+import Search from "../search";
 
 const getMarkerColor = (totalImtNormalPct: number) => {
   if (totalImtNormalPct <= 0.5) {
@@ -23,12 +23,31 @@ const getMarkerColor = (totalImtNormalPct: number) => {
   }
 };
 
-const MapSchool = (props: MapSchoolProps) => {
-  const { data } = props;
+const MapSchool = () => {
+  const [query, setQuery] = useState("");
+
+  const searchParams = useSearchParams();
+  const limitParams = searchParams.get("limit");
+
+  const { data: schools, isLoading: schoolsLoading } = useQuery({
+    queryKey: ["schools", query, limitParams],
+    queryFn: () => school.get(query, limitParams || ""),
+  });
 
   const position = [-2.5489, 118.0149];
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<any>(null);
+
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setQuery(value);
+    }, 3000),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   const handleOpen = (item: any) => {
     setItem(item);
@@ -59,7 +78,7 @@ const MapSchool = (props: MapSchoolProps) => {
         />
 
         <MarkerClusterGroup>
-          {data?.map((item) => {
+          {schools?.map((item) => {
             let label;
             const imtPct = parseInt(item.imt_pct);
 
@@ -98,6 +117,7 @@ const MapSchool = (props: MapSchoolProps) => {
         </MarkerClusterGroup>
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
+      <Search handleChange={handleSearchChange} />
     </>
   );
 };

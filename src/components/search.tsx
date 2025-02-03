@@ -4,7 +4,11 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Card } from "./ui/card";
 import { useTabStore } from "@/stores/useTabStore";
 
-const Search = () => {
+const Search = ({
+  handleChange,
+}: {
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
   const { activeTab, setActiveTab } = useTabStore();
 
   return (
@@ -23,7 +27,11 @@ const Search = () => {
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <Input placeholder="Cari lokasi..." className="w-[300px]" />
+        <Input
+          placeholder="Cari lokasi..."
+          className="w-[300px]"
+          onChange={handleChange}
+        />
       </div>
     </Card>
   );
