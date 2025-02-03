@@ -94,7 +94,7 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
                   width: `${(total_male / total_students) * 100}%`,
                 }}></div>
               <div
-                className="h-full bg-primary-foreground"
+                className="h-full bg-[#FF0CA6]"
                 style={{
                   width: `${(total_female / total_students) * 100}%`,
                 }}></div>
