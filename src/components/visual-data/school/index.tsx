@@ -35,21 +35,23 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
         <>
           {data && (
             <>
-              <div className="fixed z-20 top-4 left-5 h-[calc(100%-2rem)] w-[438px]">
-                <div className="flex flex-col justify-between gap-5 h-full">
+              <div className="z-20 absolute bottom-4 top-4 left-4 w-[23%]">
+                <div className="flex flex-col justify-between gap-4 h-full">
                   <ModalSchool data={data as schoolDetail} />
                   <CardAllergy data={data as schoolDetail} />
                 </div>
               </div>
+
+              <div className="absolute z-20 bottom-4 left-[calc(23%+2rem)] right-4">
+                <ChartImt data={data as schoolDetail} />
+              </div>
+
               <Button
                 onClick={() => onOpenChange(false)}
                 variant={"destructive"}
-                className="font-medium fixed z-20 top-4 left-[25%] ">
+                className="font-medium absolute z-20 top-4 left-[calc(23%+2rem)] rounded-full h-10 w-10">
                 <X className="h-4 w-4" />
               </Button>
-              <div className="fixed z-20 !bottom-5 right-5 h-[calc(50%-13.4rem)] w-[74%] ">
-                <ChartImt data={data as schoolDetail} />
-              </div>
             </>
           )}
         </>

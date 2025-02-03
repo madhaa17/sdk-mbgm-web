@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { KitchenBatchType, KitchenDetail } from "@/type";
 import { useState } from "react";
 import { formatTime } from "@/lib/utils";
-import { MoveRight } from "lucide-react";
+import clsx from "clsx";
 
 const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
   const [selectedBatch, setSelectedBatch] = useState<
@@ -25,7 +25,7 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
   };
 
   return (
-    <Card className="rounded-2xl p-4 w-full bg-card/70 h-[253px]">
+    <Card className="rounded-2xl p-4 w-full bg-card/70 h-[225px]">
       <CardContent className="flex justify-between gap-4 ">
         {/* Dropdown */}
         <div className="flex flex-col justify-between w-fit gap-2">
@@ -63,9 +63,18 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
         {/* Timeline */}
         <div className="flex justify-between items-start gap-4 mt-4 w-[70%]">
           {/* Proses Persiapan */}
-          <div className="flex flex-col items-center border ">
+          <div className="flex flex-col items-center">
             <div className="flex justify-between items-center">
-              <div className="w-8 h-8 bg-green-500 rounded-full mb-2 flex item-center justify-center pt-1">
+              <div
+                className={clsx(
+                  "w-8 h-8 rounded-full mb-2 flex items-center justify-center text-white",
+                  selectedBatch?.step_pemorsian_a3
+                    ? "bg-primary" // Selesai
+                    : selectedBatch?.step_pemorsian_a1 ||
+                      selectedBatch?.step_pemorsian_a2
+                    ? "bg-green-500" // Saat ini
+                    : "bg-yellow-500" // Berikutnya
+                )}>
                 1
               </div>
             </div>
@@ -92,7 +101,15 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
 
           {/* Proses Distribusi */}
           <div className="flex flex-col items-center">
-            <div className="w-8 h-8 bg-yellow-500 rounded-full mb-2 flex item-center justify-center pt-1">
+            <div
+              className={clsx(
+                "w-8 h-8 rounded-full mb-2 flex items-center justify-center text-white",
+                selectedBatch?.step_distribusi_b2
+                  ? "bg-primary" // Selesai
+                  : selectedBatch?.step_distribusi_b1
+                  ? "bg-green-500" // Saat ini
+                  : "bg-yellow-500" // Berikutnya
+              )}>
               2
             </div>
             <p className="text-sm font-semibold">PROSES DISTRIBUSI</p>
@@ -114,7 +131,15 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
 
           {/* Proses Akhir */}
           <div className="flex flex-col items-center">
-            <div className="w-8 h-8 bg-yellow-500 rounded-full mb-2 flex item-center justify-center pt-1">
+            <div
+              className={clsx(
+                "w-8 h-8 rounded-full mb-2 flex items-center justify-center text-white",
+                selectedBatch?.step_akhir_c2
+                  ? "bg-primary" // Selesai
+                  : selectedBatch?.step_akhir_c1
+                  ? "bg-green-500" // Saat ini
+                  : "bg-yellow-500" // Berikutnya
+              )}>
               3
             </div>
             <p className="text-sm font-semibold">PROSES AKHIR</p>

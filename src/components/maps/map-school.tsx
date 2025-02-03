@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { school } from "@/models/school";
 import { debounce } from "lodash";
 import Search from "../search";
+import Loader from "../loader";
 
 const getMarkerColor = (totalImtNormalPct: number) => {
   if (totalImtNormalPct <= 0.5) {
@@ -29,7 +30,7 @@ const MapSchool = () => {
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
-  const { data: schools, isLoading: schoolsLoading } = useQuery({
+  const { data: schools, isLoading } = useQuery({
     queryKey: ["schools", query, limitParams],
     queryFn: () => school.get(query, limitParams || ""),
   });
@@ -41,7 +42,7 @@ const MapSchool = () => {
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setQuery(value);
-    }, 3000),
+    }, 2000),
     []
   );
 
@@ -79,16 +80,7 @@ const MapSchool = () => {
 
         <MarkerClusterGroup>
           {schools?.map((item) => {
-            let label;
-            const imtPct = parseInt(item.imt_pct);
-
-            if (imtPct <= 0.5) {
-              label = "BAD";
-            } else if (imtPct > 0.5 && imtPct <= 0.7) {
-              label = "NORMAL";
-            } else {
-              label = "GOOD";
-            }
+            const imtPct = parseFloat(item.imt_pct || "0");
 
             const color = getMarkerColor(imtPct);
 
@@ -103,7 +95,6 @@ const MapSchool = () => {
                   <div>
                     <p>{item.school_name}</p>
                     <p>{item.school_category}</p>
-                    <p>{item.imt_pct}</p>
                   </div>
                   <Button
                     onClick={() => handleMarkerClick(item.id)}
@@ -118,6 +109,7 @@ const MapSchool = () => {
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
       <Search handleChange={handleSearchChange} />
+      <Loader showLoader={isLoading} />
     </>
   );
 };

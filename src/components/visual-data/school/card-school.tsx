@@ -72,7 +72,7 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
   } satisfies ChartConfig;
 
   return (
-    <Card className="rounded-2xl bg-card/70 h-[67vh] box-border">
+    <Card className="rounded-2xl bg-card/70 box-border">
       <CardHeader>
         <CardTitle>{data.school_name}</CardTitle>
       </CardHeader>
@@ -81,7 +81,7 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
           <p>NPSN: {data.school_npsn}</p>
           <p>{data.school_category}</p>
           <p>{data.school_address}</p>
-          <p>{data.school_phone}</p>
+          <p>tlp: {data.school_phone}</p>
         </div>
 
         <div className="space-y-2">

@@ -83,7 +83,7 @@ const CardAllergy = ({ data }: { data: schoolDetail }) => {
                     />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent className="z-50">
                   <p>
                     {category.value}% dari {totalStudents} siswa {category.name}{" "}
                   </p>

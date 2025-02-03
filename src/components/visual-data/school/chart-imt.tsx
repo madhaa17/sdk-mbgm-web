@@ -33,7 +33,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const ChartImt = ({ data }: { data: schoolDetail }) => {
-  const chartData = data.imt_chart.map((item) => ({
+  const chartData = data?.imt_chart?.map((item) => ({
     ...item,
     imt_kurus_ringan: Number(item.imt_kurus_ringan),
     imt_kurus_berat: Number(item.imt_kurus_berat),
@@ -43,8 +43,8 @@ const ChartImt = ({ data }: { data: schoolDetail }) => {
   }));
 
   return (
-    <Card className="w-full rounded-2xl bg-card/70 h-[253px]">
-      <CardContent className="h-full py-2">
+    <Card className="w-full rounded-2xl bg-card/70 h-[225px]">
+      <CardContent className="h-full px-0 py-0">
         <ChartContainer config={chartConfig} className="h-full w-full">
           <LineChart
             data={chartData}

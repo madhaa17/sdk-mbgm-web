@@ -29,7 +29,7 @@ const Search = ({
         </Tabs>
         <Input
           placeholder="Cari lokasi..."
-          className="w-[300px]"
+          className="w-full min-w-[300px]"
           onChange={handleChange}
         />
       </div>

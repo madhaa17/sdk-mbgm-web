@@ -1,19 +1,20 @@
 import dynamic from "next/dynamic";
 import { useTabStore } from "@/stores/useTabStore";
+import Loader from "@/components/loader";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <Loader showLoader={true} />,
 });
 
 const MapKitchen = dynamic(() => import("@/components/maps/map-kitchen"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <Loader showLoader={true} />,
 });
 
 const MapClinic = dynamic(() => import("@/components/maps/map-clinic"), {
   ssr: false,
-  loading: () => <p>Loading...</p>,
+  loading: () => <Loader showLoader={true} />,
 });
 
 export default function Home() {

@@ -31,7 +31,7 @@ const MapKitchen = () => {
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setQuery(value);
-    }, 3000),
+    }, 2000),
     []
   );
 
