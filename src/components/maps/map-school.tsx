@@ -9,7 +9,6 @@ import { SchoolList } from "@/type";
 import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
 
-
 interface MapSchoolProps {
   data: SchoolList[];
 }
@@ -27,13 +26,7 @@ const getMarkerColor = (totalImtNormalPct: number) => {
 const MapSchool = (props: MapSchoolProps) => {
   const { data } = props;
 
-  if (!Array.isArray(data)) {
-    throw new Error("Data must be an array");
-  }
-
   const position = [-2.5489, 118.0149];
-
-  
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<any>(null);
 

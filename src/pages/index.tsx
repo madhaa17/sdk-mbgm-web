@@ -7,7 +7,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { SchoolList } from "@/type";
 import { useSearchParams } from "next/navigation";
-// import { useState, useEffect, useMemo } from "react";
+import { useState, useCallback } from "react";
+import debounce from "lodash/debounce";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
   ssr: false,
@@ -26,16 +27,28 @@ const MapClinic = dynamic(() => import("@/components/maps/map-clinic"), {
 
 export default function Home() {
   const { activeTab, setActiveTab } = useTabStore();
+  const [query, setQuery] = useState("");
 
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
-  console.log({ limitParams });
-
+  // Fetch schools based on query
   const { data: schools, isLoading: schoolsLoading } = useQuery({
-    queryKey: ["schools", limitParams],
-    queryFn: () => school.get("", limitParams || ""),
+    queryKey: ["schools", query, limitParams],
+    queryFn: () => school.get(query, limitParams || ""),
   });
+
+  // Debounced search function using lodash debounce
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setQuery(value);
+    }, 3000),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   const Search = () => {
     return (
@@ -57,8 +70,7 @@ export default function Home() {
           <Input
             placeholder="Cari lokasi..."
             className="w-[300px]"
-            // value={searchQuery}
-            // onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchChange}
           />
         </div>
       </Card>
@@ -68,7 +80,6 @@ export default function Home() {
   if (schoolsLoading) {
     return <p>Loading...</p>;
   }
-  console.log({ schools });
 
   return (
     <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative">

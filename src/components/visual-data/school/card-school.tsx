@@ -1,39 +1,50 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
-import { Label, Pie, PieChart, Legend } from "recharts";
+import { Label, Pie, PieChart, Legend, Cell } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { schoolDetail } from "@/type";
 
-const CardSchool = () => {
-  const schoolData = {
-    school_name: "SEKOLAH MUHAMMADIYAH DARUL ARQAM (SMP / SMA) GARUT",
-    school_npsn: "1234567890",
-    school_category: "Negeri",
-    school_type: "SD",
-    school_address: "Jl. Merdeka No.1, Jakarta",
-    school_province: "DKI Jakarta",
-    school_city: "Jakarta Pusat",
-    school_district: "Gambir",
-    school_subdistrict: "Merdeka",
-    school_telp: "+6221-12345678",
-    school_email: "sd01@jakarta.sch.id",
-  };
-
+const CardSchool = ({ data }: { data: schoolDetail }) => {
   const total_students = 1100;
-  const total_male = 550;
-  const total_female = 550;
+  const total_male = Number(data.total_male);
+  const total_female = Number(data.total_female);
 
-  const chartData = [
-    { imt: "kurus ringan", total: 275, fill: "hsl(var(--chart-1))" },
-    { imt: "kurus berat", total: 200, fill: "hsl(var(--chart-2))" },
-    { imt: "normal", total: 262, fill: "hsl(var(--chart-3))" },
-    { imt: "gemuk ringan", total: 173, fill: "hsl(var(--chart-4))" },
-    { imt: "gemuk berat", total: 190, fill: "hsl(var(--chart-5))" },
+  const COLORS = [
+    "hsl(var(--chart-1))",
+    "hsl(var(--chart-2))",
+    "hsl(var(--chart-3))",
+    "hsl(var(--chart-4))",
+    "hsl(var(--chart-5))",
   ];
+
+  const imt_data = [
+    {
+      name: "Kurus Ringan",
+      value: Number(data.imt_kurus_ringan),
+    },
+    {
+      name: "Kurus Berat",
+      value: Number(data.imt_kurus_berat),
+    },
+    {
+      name: "Normal",
+      value: Number(data.imt_normal),
+    },
+    {
+      name: "Gemuk Ringan",
+      value: Number(data.imt_gemuk_ringan),
+    },
+    {
+      name: "Obesitas",
+      value: Number(data.imt_obesitas),
+    },
+  ];
+
   const chartConfig = {
     total: {
       label: "Total",
@@ -54,31 +65,27 @@ const CardSchool = () => {
       label: "Gemuk Ringan",
       color: "hsl(var(--chart-4))",
     },
-    gemuk_berat: {
-      label: "Gemuk Berat",
+    obesitas: {
+      label: "Obesitas",
       color: "hsl(var(--chart-5))",
     },
   } satisfies ChartConfig;
 
-  const total = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.total, 0);
-  }, []);
-
   return (
     <Card className="rounded-2xl bg-card/70 h-[67vh] box-border">
       <CardHeader>
-        <CardTitle>{schoolData.school_name}</CardTitle>
+        <CardTitle>{data.school_name}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-10">
         <div className="space-y-1">
-          <p>NPSN: {schoolData.school_npsn}</p>
-          <p>{schoolData.school_address}</p>
-          <p>{schoolData.school_email}</p>
-          <p>{schoolData.school_telp}</p>
+          <p>NPSN: {data.school_npsn}</p>
+          <p>{data.school_category}</p>
+          <p>{data.school_address}</p>
+          <p>{data.school_phone}</p>
         </div>
 
         <div className="space-y-2">
-          <p> Total: {total_students} Siswa/Siswi</p>
+          <p> Total: {data.total_student} Siswa</p>
           <div className="w-full space-y-1">
             <div className="w-full h-5 border flex">
               <div
@@ -93,58 +100,63 @@ const CardSchool = () => {
                 }}></div>
             </div>
             <div className="flex justify-between items-center text-xs">
-              <p>Siswa: {total_male} (50%)</p>
-              <p>Siswi: {total_female} (50%)</p>
+              <p>Siswa: {total_male}</p>
+              <p>Siswi: {total_female}</p>
             </div>
           </div>
         </div>
 
         <ChartContainer config={chartConfig} className="aspect-video">
-          <PieChart>
+          <PieChart width={400} height={300}>
             <Legend
               layout="vertical"
               align="right"
               verticalAlign="middle"
-              iconType="square"
-            />
-
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              iconType="circle"
             />
             <Pie
-              data={chartData}
-              dataKey="total"
-              nameKey="imt"
+              data={imt_data}
+              cx="50%"
+              cy="50%"
               innerRadius={60}
-              strokeWidth={5}>
+              outerRadius={80}
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="value">
+              {imt_data.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
               <Label
                 content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle">
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-primary-foreground text-3xl font-bold">
-                          {total.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-primary-foreground">
-                          Total
-                        </tspan>
-                      </text>
-                    );
-                  }
+                  // @ts-ignore
+                  const { cx, cy } = viewBox;
+                  return (
+                    <text
+                      x={cx}
+                      y={cy}
+                      textAnchor="middle"
+                      dominantBaseline="middle">
+                      <tspan
+                        x={cx}
+                        y={cy}
+                        className="fill-primary-foreground text-3xl font-bold">
+                        {data.total_student}
+                      </tspan>
+                      <tspan
+                        x={cx}
+                        y={cy + 24}
+                        className="fill-primary-foreground">
+                        Total
+                      </tspan>
+                    </text>
+                  );
                 }}
               />
             </Pie>
+            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
           </PieChart>
         </ChartContainer>
       </CardContent>

@@ -6,7 +6,7 @@ export const school = {
     api
       .get<SchoolList[]>(
         `/api/v1/mbgm/school-locations?${
-          q ? `q=${encodeURIComponent(q)}` : ""
+          q ? `q=${encodeURIComponent(q)}&` : ""
         }${limit ? `limit=${limit}` : ""}`
       )
       .then((res) => res.data),

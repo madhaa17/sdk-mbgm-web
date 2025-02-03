@@ -1,8 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis, Legend } from "recharts";
-import { data_imt } from "@/dummy";
-
+import { schoolDetail } from "@/type";
 import {
   ChartConfig,
   ChartContainer,
@@ -10,55 +9,118 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+const imt_chart = [
+  {
+    date: "Okt 2024",
+    imt_kurus_ringan: "193",
+    imt_kurus_berat: "127",
+    imt_normal: "657",
+    imt_gemuk_ringan: "49",
+    imt_obesitas: "73",
+  },
+  {
+    date: "Des 2024",
+    imt_kurus_ringan: "193",
+    imt_kurus_berat: "127",
+    imt_normal: "657",
+    imt_gemuk_ringan: "49",
+    imt_obesitas: "73",
+  },
+  {
+    date: "Jan 2025",
+    imt_kurus_ringan: "193",
+    imt_kurus_berat: "127",
+    imt_normal: "657",
+    imt_gemuk_ringan: "49",
+    imt_obesitas: "73",
+  },
+  {
+    date: "Feb 2025",
+    imt_kurus_ringan: "193",
+    imt_kurus_berat: "127",
+    imt_normal: "657",
+    imt_gemuk_ringan: "49",
+    imt_obesitas: "73",
+  },
+];
+
 const chartConfig = {
-  total_imt_kurus_ringan: {
+  imt_kurus_ringan: {
     label: "Kurus Ringan",
     color: "hsl(var(--chart-1))",
   },
-  total_imt_kurus_berat: { label: "Kurus Berat", color: "hsl(var(--chart-2))" },
-  total_imt_normal: { label: "Normal", color: "hsl(var(--chart-3))" },
-  total_imt_gemuk_ringan: {
+  imt_kurus_berat: {
+    label: "Kurus Berat",
+    color: "hsl(var(--chart-2))",
+  },
+  imt_normal: {
+    label: "Normal",
+    color: "hsl(var(--chart-3))",
+  },
+  imt_gemuk_ringan: {
     label: "Gemuk Ringan",
     color: "hsl(var(--chart-4))",
   },
-  total_imt_gemuk_berat: { label: "Gemuk Berat", color: "hsl(var(--chart-5))" },
+  imt_obesitas: {
+    label: "Obesitas",
+    color: "hsl(var(--chart-5))",
+  },
 } satisfies ChartConfig;
 
 const ChartImt = () => {
+  const chartData = imt_chart.map((item) => ({
+    ...item,
+    imt_kurus_ringan: Number(item.imt_kurus_ringan),
+    imt_kurus_berat: Number(item.imt_kurus_berat),
+    imt_normal: Number(item.imt_normal),
+    imt_gemuk_ringan: Number(item.imt_gemuk_ringan),
+    imt_obesitas: Number(item.imt_obesitas),
+  }));
+
   return (
     <Card className="w-full rounded-2xl bg-card/70 h-[253px]">
       <CardContent className="h-full py-2">
         <ChartContainer config={chartConfig} className="h-full w-full">
           <LineChart
-            accessibilityLayer
-            data={data_imt.imt_stats}
-            margin={{ left: 12, right: 12 }}>
-            <CartesianGrid vertical={false} />
+            data={chartData}
+            margin={{ left: 32, right: 32, top: 32, bottom: 8 }}>
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
 
             <Legend
               layout="horizontal"
               align="center"
               verticalAlign="top"
-              iconType="square"
+              iconType="circle"
             />
             <XAxis
-              dataKey="month"
+              dataKey="date"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
             />
-            <YAxis />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+            <ChartTooltip
+              cursor={{ strokeDasharray: "3 3" }}
+              content={<ChartTooltipContent />}
+            />
             {Object.keys(chartConfig).map((key) => (
               <Line
                 key={key}
                 dataKey={key}
                 type="monotone"
-                stroke={
-                  (chartConfig as Record<string, { color: string }>)[key].color
-                }
+                //@ts-ignore
+                stroke={chartConfig[key].color}
                 strokeWidth={2}
-                dot={false}
+                dot={{
+                  r: 4,
+                  strokeWidth: 2,
+                  fill: "white",
+                }}
+                activeDot={{
+                  r: 6,
+                  strokeWidth: 2,
+                  fill: "white",
+                }}
               />
             ))}
           </LineChart>

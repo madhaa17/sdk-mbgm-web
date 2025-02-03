@@ -41,6 +41,8 @@ export interface schoolDetail {
   school_detail_id: number;
   school_name: string;
   total_student: number;
+  total_male: string;
+  total_female: string;
   b_a1_egg: string;
   b_a1_cow_milk: string;
   b_a1_seafood: string;

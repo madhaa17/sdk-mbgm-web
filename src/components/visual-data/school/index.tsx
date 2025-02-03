@@ -21,24 +21,24 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
   const { data, isLoading } = useQuery({
     queryKey: ["school", item],
     queryFn: () => school.getDetail(item),
-    enabled: !!item, // Only run the query when item is available
+    enabled: !!item,
   });
+
+  console.log({ data });
 
   return (
     <>
       {open && (
         <>
           {isLoading ? (
-            <div className="fixed z-20 top-4 left-5 h-[calc(100%-3rem)] w-[438px] flex items-center justify-center">
-              <span>Loading...</span>{" "}
-            </div>
+            <></>
           ) : (
             data && (
               <>
-                <div className="fixed z-20 top-4 left-5 h-[calc(100%-3rem)] w-[438px]">
+                <div className="fixed z-20 top-4 left-5 h-[calc(100%-2rem)] w-[438px]">
                   <div className="flex flex-col justify-between gap-5 h-full">
-                    <ModalSchool />
-                    <CardAllergy />
+                    <ModalSchool data={data} />
+                    <CardAllergy data={data} />
                   </div>
                 </div>
                 <Button

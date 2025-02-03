@@ -1,52 +1,42 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { schoolDetail } from "@/type";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const data = {
-  student_total: 1100,
-  total_a1_egg: 250,
-  total_a1_cow_milk: 200,
-  total_a1_seafood: 150,
-  total_a1_red_meat: 100,
-  total_a2_fruit: 10,
-  total_a2_vegetable: 5,
-  total_a2_latex_fruit: 10,
-  total_a3_sesame: 25,
-  total_a3_herbs_spices: 30,
-  total_a4_food_color: 15,
-  total_a4_food_preservative: 25,
-  total_a4_artificial_flavors: 10,
-  total_a5_chocolate: 20,
-  total_a5_breads_cakes: 120,
-  total_a5_food_instant: 60,
-  total_vegan: 70,
-};
+const CardAllergy = ({ data }: { data: schoolDetail }) => {
+  const totalStudents = Math.max(Number(data?.total_student) || 0, 1);
 
-const CardAllergy = () => {
-  // Calculate totals for each category
   const animalProteinTotal =
-    data.total_a1_egg +
-    data.total_a1_cow_milk +
-    data.total_a1_seafood +
-    data.total_a1_red_meat;
+    (Number(data?.b_a1_egg) || 0) +
+    (Number(data?.b_a1_cow_milk) || 0) +
+    (Number(data?.b_a1_seafood) || 0) +
+    (Number(data?.b_a1_red_meat) || 0);
 
   const plantProteinTotal =
-    data.total_a2_fruit + data.total_a2_vegetable + data.total_a2_latex_fruit;
+    (Number(data?.b_a2_fruit) || 0) +
+    (Number(data?.b_a2_vegetable) || 0) +
+    (Number(data?.b_a2_latex_fruit) || 0);
 
-  const spicesTotal = data.total_a3_sesame + data.total_a3_herbs_spices;
+  const spicesTotal =
+    (Number(data?.b_a3_sesame) || 0) + (Number(data?.b_a3_herbs_spices) || 0);
 
   const additiveTotal =
-    data.total_a4_food_color +
-    data.total_a4_food_preservative +
-    data.total_a4_artificial_flavors;
+    (Number(data?.b_a4_food_color) || 0) +
+    (Number(data?.b_a4_food_preservative) || 0) +
+    (Number(data?.b_a4_artificial_flavors) || 0);
 
   const processedTotal =
-    data.total_a5_chocolate +
-    data.total_a5_breads_cakes +
-    data.total_a5_food_instant;
+    (Number(data?.b_a5_chocolate) || 0) +
+    (Number(data?.b_a5_breads_cakes) || 0) +
+    (Number(data?.b_a5_food_instant) || 0);
 
-  // Calculate percentages
   const calculatePercentage = (value: number) =>
-    (value / data.student_total) * 100;
+    ((value / totalStudents) * 100).toFixed(2);
 
   const categories = [
     {
@@ -69,28 +59,37 @@ const CardAllergy = () => {
       name: "Alergi Makanan Olahan",
       value: calculatePercentage(processedTotal),
     },
-    {
-      name: "Vegan / Vegetarian",
-      value: calculatePercentage(data.total_vegan),
-    },
   ];
 
   return (
-    <Card className="rounded-2xl bg-card/70 h-[253px]">
+    <Card className="rounded-2xl bg-card/70 h-full">
       <CardContent className="p-6 space-y-4">
         {categories.map((category, index) => (
+          // bar chart
           <div key={index} className="flex items-center justify-between">
             <div className="text-sm font-medium">{category.name}</div>
-            <div className="w-1/2 h-4 bg-muted overflow-hidden">
-              <div
-                className="h-full bg-yellow-400"
-                style={{
-                  width: `${category.value}%`,
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              />
-            </div>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="w-1/2 h-4 bg-muted overflow-hidden">
+                    <div
+                      className="h-full bg-yellow-400"
+                      style={{
+                        width: `${category.value}%`,
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {category.value}% dari {totalStudents} siswa {category.name}{" "}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         ))}
       </CardContent>
