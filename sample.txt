@@ -1,0 +1,172 @@
+import * as React from "react";
+import { Label, Legend, Pie, PieChart } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+
+// Data yang lebih masuk akal
+const students = {
+  student_total: 1100, // total students
+  total_a1_egg: 50,
+  total_a1_cow_milk: 100,
+  total_a1_seafood: 60,
+  total_a1_red_meat: 40,
+  total_a2_fruit: 120,
+  total_a2_vegetable: 80,
+  total_a2_latex_fruit: 30,
+  total_a3_sesame: 20,
+  total_a3_herbs_spices: 25,
+  total_a4_food_color: 10,
+  total_a4_food_preservative: 15,
+  total_a4_artificial_flavors: 5,
+  total_a5_chocolate: 30,
+  total_a5_breads_cakes: 60,
+  total_a5_food_instant: 40,
+  total_vegan: 20,
+};
+
+// Data untuk pie chart
+const pieData = [
+  { name: "Egg", value: students.total_a1_egg, fill: "#FF8042" },
+  { name: "Cow Milk", value: students.total_a1_cow_milk, fill: "#FFBB28" },
+  { name: "Seafood", value: students.total_a1_seafood, fill: "#00C49F" },
+  { name: "Red Meat", value: students.total_a1_red_meat, fill: "#0088FE" },
+  { name: "Fruit", value: students.total_a2_fruit, fill: "#FF8042" },
+  { name: "Vegetable", value: students.total_a2_vegetable, fill: "#FFBB28" },
+  {
+    name: "Latex Fruit",
+    value: students.total_a2_latex_fruit,
+    fill: "#00C49F",
+  },
+  { name: "Sesame", value: students.total_a3_sesame, fill: "#0088FE" },
+  {
+    name: "Herbs & Spices",
+    value: students.total_a3_herbs_spices,
+    fill: "#FF8042",
+  },
+  { name: "Food Color", value: students.total_a4_food_color, fill: "#FFBB28" },
+  {
+    name: "Food Preservative",
+    value: students.total_a4_food_preservative,
+    fill: "#00C49F",
+  },
+  {
+    name: "Artificial Flavors",
+    value: students.total_a4_artificial_flavors,
+    fill: "#0088FE",
+  },
+  { name: "Chocolate", value: students.total_a5_chocolate, fill: "#FF8042" },
+  {
+    name: "Breads & Cakes",
+    value: students.total_a5_breads_cakes,
+    fill: "#FFBB28",
+  },
+  {
+    name: "Instant Food",
+    value: students.total_a5_food_instant,
+    fill: "#00C49F",
+  },
+  { name: "Vegan", value: students.total_vegan, fill: "#0088FE" },
+];
+
+// Konfigurasi warna untuk masing-masing kategori
+const chartConfig = {
+  egg: { label: "Egg", color: "#FF8042" },
+  cow_milk: { label: "Cow Milk", color: "#FFBB28" },
+  seafood: { label: "Seafood", color: "#00C49F" },
+  red_meat: { label: "Red Meat", color: "#0088FE" },
+  fruit: { label: "Fruit", color: "#FF8042" },
+  vegetable: { label: "Vegetable", color: "#FFBB28" },
+  latex_fruit: { label: "Latex Fruit", color: "#00C49F" },
+  sesame: { label: "Sesame", color: "#0088FE" },
+  herbs_spices: { label: "Herbs & Spices", color: "#FF8042" },
+  food_color: { label: "Food Color", color: "#FFBB28" },
+  food_preservative: { label: "Food Preservative", color: "#00C49F" },
+  artificial_flavors: { label: "Artificial Flavors", color: "#0088FE" },
+  chocolate: { label: "Chocolate", color: "#FF8042" },
+  breads_cakes: { label: "Breads & Cakes", color: "#FFBB28" },
+  instant_food: { label: "Instant Food", color: "#00C49F" },
+  vegan: { label: "Vegan", color: "#0088FE" },
+} satisfies ChartConfig;
+
+export function ModalStudent({ title }: { title: string }) {
+  return (
+    <Card className="rounded-2xl">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[360px]">
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Legend
+              layout="horizontal"
+              align="center"
+              verticalAlign="bottom"
+              iconType="circle"
+            />
+            <Pie
+              className="cursor-pointer"
+              data={pieData}
+              dataKey="value"
+              nameKey="name"
+              innerRadius={60}
+              outerRadius={100}
+              strokeWidth={5}>
+              {pieData.map((entry, index) => {
+                // Menyelaraskan nama untuk mendapatkan warna yang sesuai
+                const formattedName = entry.name
+                  .toLowerCase()
+                  .replace(/\s+/g, "_");
+                return (
+                  <Label
+                    key={`label-${index}`}
+                    fill={
+                      // @ts-ignore
+                      chartConfig[formattedName]?.color || "#8884d8"
+                    }
+                  />
+                );
+              })}
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle">
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="fill-foreground text-3xl font-bold">
+                          {students.student_total}{" "}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground">
+                          Total Students
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
+  );
+}
