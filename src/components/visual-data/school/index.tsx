@@ -24,8 +24,6 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
     enabled: !!item,
   });
 
-  console.log({ data });
-
   return (
     <>
       {open && (
