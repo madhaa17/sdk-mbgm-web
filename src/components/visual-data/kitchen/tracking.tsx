@@ -31,7 +31,7 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
         <div className="flex flex-col justify-between w-fit gap-2">
           <div className="flex items-center gap-4">
             <Select onValueChange={handleBatchChange}>
-              <SelectTrigger className="bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <SelectTrigger className="bg-muted border px-4 py-2 rounded-lg">
                 <SelectValue
                   placeholder={
                     selectedBatch ? selectedBatch.batch_name : "Select Batch"
@@ -72,14 +72,14 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                     ? "bg-primary" // Selesai
                     : selectedBatch?.step_pemorsian_a1 ||
                       selectedBatch?.step_pemorsian_a2
-                    ? "bg-green-500" // Saat ini
-                    : "bg-green-500" // Berikutnya
+                    ? "dark:bg-green-500 bg-orange-500" // Saat ini
+                    : "dark:bg-green-500 bg-orange-500" // Berikutnya
                 )}>
                 1
               </div>
             </div>
             <p className="text-sm font-semibold">PROSES PERSIAPAN</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-primary-foreground">
               {formatTime(selectedBatch?.pemorsian_start_at ?? "")} -{" "}
               {formatTime(selectedBatch?.pemorsian_end_at ?? "")}
             </p>
@@ -108,13 +108,13 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                   ? "bg-primary" // Selesai
                   : selectedBatch?.step_distribusi_b1 ||
                     selectedBatch?.step_pemorsian_a3
-                  ? "bg-green-500" // Saat ini
-                  : "bg-yellow-500" // Berikutnya
+                  ? "dark:bg-green-500 bg-yellow-500" // Saat ini
+                  : "dark:bg-yellow-500 bg-orange-500" // Berikutnya
               )}>
               2
             </div>
             <p className="text-sm font-semibold">PROSES DISTRIBUSI</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-primary-foreground">
               {formatTime(selectedBatch?.distribusi_start_at ?? "")} -{" "}
               {formatTime(selectedBatch?.distribusi_end_at ?? "")}
             </p>
@@ -139,13 +139,13 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                   ? "bg-primary" // Selesai
                   : selectedBatch?.step_akhir_c1 ||
                     selectedBatch?.step_distribusi_b2
-                  ? "bg-green-500" // Saat ini
-                  : "bg-yellow-500" // Berikutnya
+                  ? "dark:bg-green-500 bg-yellow-500" // Saat ini
+                  : "dark:bg-yellow-500 bg-orange-500" // Berikutnya
               )}>
               3
             </div>
             <p className="text-sm font-semibold">PROSES AKHIR</p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-primary-foreground">
               {formatTime(selectedBatch?.akhir_start_at ?? "")} -{" "}
               {formatTime(selectedBatch?.akhir_end_at ?? "")}
             </p>
