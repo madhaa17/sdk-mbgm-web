@@ -106,7 +106,7 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
           </div>
         </div>
 
-        <ChartContainer config={chartConfig} className="border w-full h-full">
+        <ChartContainer config={chartConfig} className="w-full h-full">
           <PieChart className="w-full h-full">
             <Legend
               layout="vertical"
