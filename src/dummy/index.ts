@@ -230,3 +230,83 @@ export const data_imt = {
     },
   ],
 };
+
+export const data_clinic = {
+  clinic_name: "KLINIK MUHAMMADIYAH DARUL ARQAM",
+  clinic_address: "Jl. Darul Arqam, Garut, Jawa Barat",
+  clinic_email: "clinic@mail.com",
+  clinic_phone: "+62-8123-4568",
+  pastient_total: 80,
+  male_total: 33,
+  female_total: 47,
+  patient_age_stats: [
+    {
+      age_range: "Dewasa",
+      total_patient: 45,
+    },
+    {
+      age_range: "Remaja",
+      total_patient: 23,
+    },
+    {
+      age_range: "Balita",
+      total_patient: 4,
+    },
+    {
+      age_range: "Manula",
+      total_patient: 1,
+    },
+    {
+      age_range: "Lansia",
+      total_patient: 1,
+    },
+    {
+      age_range: "Lainnya",
+      total_patient: 4,
+    },
+  ],
+  patient_sick_stats: [
+    {
+      category: "demam",
+      total_patient: 15,
+    },
+    {
+      category: "batuk",
+      total_patient: 5,
+    },
+    {
+      category: "gusi bengkak",
+      total_patient: 4,
+    },
+    {
+      category: "sesak nafas",
+      total_patient: 2,
+    },
+    {
+      category: "hr demam",
+      total_patient: 2,
+    },
+    {
+      category: "flu",
+      total_patient: 2,
+    },
+    {
+      category: "sakit gigi",
+      total_patient: 1,
+    },
+    {
+      category: "nyeri dada kiri",
+      total_patient: 1,
+    },
+    {
+      category: "nyeri uluhati dan mual",
+      total_patient: 1,
+    },
+    {
+      category: "gusi sakit",
+      total_patient: 1,
+    },
+  ],
+  top_ten_patient_stats: [],
+  diagnosis_stats: [],
+};

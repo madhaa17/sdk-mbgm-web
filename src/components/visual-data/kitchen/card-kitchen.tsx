@@ -4,8 +4,6 @@ import Image from "next/image";
 import { KitchenDetail } from "@/type";
 
 const CardKitchen = ({ data }: { data: KitchenDetail }) => {
-  console.log({ data });
-
   return (
     <Card className="w-full h-full bg-card/70 rounded-2xl">
       <CardHeader>
