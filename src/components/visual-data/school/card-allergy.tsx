@@ -62,42 +62,38 @@ const CardAllergy = ({ data }: { data: schoolDetail }) => {
   ];
 
   return (
-    // <Card className="rounded-2xl bg-card/70 h-full max-h-[30%] text-[clamp(14px,2vw,24px)]">
-    //   <CardContent className="p-6 space-y-4">
+    <Card className="rounded-2xl bg-card/70 h-full">
+      <CardContent className="p-6 space-y-4">
+        {categories.map((category, index) => (
+          // bar chart
+          <div key={index} className="flex items-center justify-between">
+            <div className="text-sm font-medium">{category.name}</div>
 
-    //   </CardContent>
-    // </Card>
-
-    <div className="space-y-3">
-      {categories.map((category, index) => (
-        // bar chart
-        <div key={index} className="flex items-center justify-between">
-          <div className="text-sm font-medium">{category.name}</div>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="w-1/2 h-4 bg-muted overflow-hidden">
-                  <div
-                    className="h-full bg-yellow-400"
-                    style={{
-                      width: `${category.value}%`,
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="z-50">
-                <p>
-                  {category.value}% dari {totalStudents} siswa {category.name}{" "}
-                </p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      ))}
-    </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="w-1/2 h-4 bg-muted overflow-hidden">
+                    <div
+                      className="h-full bg-yellow-400"
+                      style={{
+                        width: `${category.value}%`,
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="z-50">
+                  <p>
+                    {category.value}% dari {totalStudents} siswa {category.name}{" "}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
   );
 };
 
