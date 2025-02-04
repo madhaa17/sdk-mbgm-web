@@ -33,18 +33,18 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
         <>
           {data && (
             <>
-              <div className="z-20 absolute w-[23%] h-[100dvh] py-4 pl-4">
+              <div className="z-20 absolute w-[23dvw] h-[100dvh] py-4 pl-4">
                 <div className="flex flex-col justify-between gap-5 h-full">
                   <CardKitchen data={data} />
                 </div>
               </div>
-              <div className="absolute z-20 bottom-4 left-[calc(23%+1rem)] right-4">
+              <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4">
                 <MealProcessCard data={data} />
               </div>
               <Button
                 onClick={() => onOpenChange(false)}
                 variant={"destructive"}
-                className="font-medium absolute z-20 top-4 left-[calc(23%+1rem)] rounded-full h-10 w-10">
+                className="font-medium absolute z-20 top-4 left-[calc(23dvw+1rem)] rounded-full h-10 w-10">
                 <X className="h-4 w-4" />
               </Button>
             </>
