@@ -6,14 +6,9 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange>
-          <Main />
-          <NextScript />
-        </ThemeProvider>
+       
+        <Main />
+        <NextScript />
       </body>
     </Html>
   );
