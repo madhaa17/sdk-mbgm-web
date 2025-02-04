@@ -73,7 +73,7 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                     : selectedBatch?.step_pemorsian_a1 ||
                       selectedBatch?.step_pemorsian_a2
                     ? "bg-green-500" // Saat ini
-                    : "bg-yellow-500" // Berikutnya
+                    : "bg-green-500" // Berikutnya
                 )}>
                 1
               </div>
@@ -106,7 +106,8 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                 "w-8 h-8 rounded-full mb-2 flex items-center justify-center text-white",
                 selectedBatch?.step_distribusi_b2
                   ? "bg-primary" // Selesai
-                  : selectedBatch?.step_distribusi_b1
+                  : selectedBatch?.step_distribusi_b1 ||
+                    selectedBatch?.step_pemorsian_a3
                   ? "bg-green-500" // Saat ini
                   : "bg-yellow-500" // Berikutnya
               )}>
@@ -136,7 +137,8 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
                 "w-8 h-8 rounded-full mb-2 flex items-center justify-center text-white",
                 selectedBatch?.step_akhir_c2
                   ? "bg-primary" // Selesai
-                  : selectedBatch?.step_akhir_c1
+                  : selectedBatch?.step_akhir_c1 ||
+                    selectedBatch?.step_distribusi_b2
                   ? "bg-green-500" // Saat ini
                   : "bg-yellow-500" // Berikutnya
               )}>

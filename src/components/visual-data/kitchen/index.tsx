@@ -33,7 +33,7 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
         <>
           {data && (
             <>
-              <div className="z-20 absolute bottom-4 top-4 left-4 w-[23%] border border-primary">
+              <div className="z-20 absolute bottom-4 top-4 left-4 w-[23%]">
                 <div className="flex flex-col justify-between gap-5 h-full">
                   <CardKitchen data={data} />
                 </div>

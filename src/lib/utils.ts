@@ -13,6 +13,10 @@ export const parseCoordinates = (input: string): LatLngTuple => {
 };
 
 export const formatTime = (timeString: string) => {
+  if (!timeString) {
+    return "";
+  }
+
   const date = new Date(timeString);
 
   date.setHours(date.getHours() + 7);
