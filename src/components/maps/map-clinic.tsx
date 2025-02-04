@@ -1,24 +1,44 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { dummyData } from "@/dummy";
+import "react-leaflet-markercluster/styles";
+
+import React, { useCallback, useState } from "react";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/clinic";
+import { clinic } from "@/models/clinic";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../loader";
+import { debounce } from "lodash";
+import Search from "../search";
+import { useSearchParams } from "next/navigation";
+import { parseCoordinates } from "@/lib/utils";
+import { Button } from "../ui/button";
 
-const getMarkerColor = (totalImtNormalPct: number) => {
-  if (totalImtNormalPct <= 0.5) {
-    return "red";
-  } else if (totalImtNormalPct > 0.5 && totalImtNormalPct <= 0.7) {
-    return "orange";
-  } else {
-    return "green";
-  }
-};
-
-const MapKitchen = () => {
+const MapClinic = () => {
   const position = [-2.5489, 118.0149];
 
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState<any>(null);
+  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const limitParams = searchParams.get("limit");
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["clinics", query, limitParams],
+    queryFn: () => clinic.get(query, limitParams || ""),
+    refetchOnWindowFocus: false,
+  });
+
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setQuery(value);
+    }, 2000),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   const handleOpen = (item: any) => {
     setItem(item);
@@ -46,41 +66,36 @@ const MapKitchen = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {dummyData.map((item) => {
-          let label;
-          const imtPct = item.imt_data.total_imt_normal_pct;
-
-          if (imtPct <= 0.5) {
-            label = "BAD";
-          } else if (imtPct > 0.5 && imtPct <= 0.7) {
-            label = "NORMAL";
-          } else {
-            label = "GOOD";
-          }
-
-          const color = getMarkerColor(imtPct);
-
-          return (
-            <CircleMarker
-              key={item.school_npsn}
-              center={[
-                item.imt_data.coordinate.lat,
-                item.imt_data.coordinate.lng,
-              ]}
-              radius={10}
-              color={color}
-              fillColor={color}
-              fillOpacity={0.6}
-              eventHandlers={{
-                click: () => handleMarkerClick(item),
-              }}
-            />
-          );
-        })}
+        <MarkerClusterGroup>
+          {data?.map((item) => {
+            return (
+              <CircleMarker
+                key={item.id}
+                center={parseCoordinates(item.healthunit_coordinate)}
+                radius={10}
+                color={"green"}
+                fillColor={"green"}>
+                <Popup>
+                  <div className="text-primary-foreground">
+                    <p>{item.healthunit_name}</p>
+                    <p>{item.healthunit_address}</p>
+                  </div>
+                  <Button
+                    onClick={() => handleMarkerClick(item.id)}
+                    className="w-full">
+                    Detail Info
+                  </Button>
+                </Popup>
+              </CircleMarker>
+            );
+          })}
+        </MarkerClusterGroup>
       </MapContainer>
       <VisualData onOpenChange={handleClose} open={open} item={item} />
+      <Search handleChange={handleSearchChange} />
+      <Loader showLoader={isLoading} />
     </>
   );
 };
 
-export default MapKitchen;
+export default MapClinic;

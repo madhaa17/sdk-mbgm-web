@@ -8,7 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const parseCoordinates = (input: string): LatLngTuple => {
-  const [lat, lng] = input.split(",").map((coord) => Number(coord.trim()));
+  if (!input) {
+    return [0, 0];
+  }
+
+  const [lat, lng] = input?.split(",").map((coord) => Number(coord.trim()));
   return [lat, lng];
 };
 

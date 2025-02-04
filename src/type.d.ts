@@ -159,3 +159,11 @@ export interface KitchenDetail {
   school_list: SchoolType[];
   kitchen_batchs: KitchenBatchType[];
 }
+
+export interface ClinicList {
+  id: number;
+  healthunit_name: string;
+  healthunit_category: null;
+  healthunit_address: string;
+  healthunit_coordinate: string;
+}
