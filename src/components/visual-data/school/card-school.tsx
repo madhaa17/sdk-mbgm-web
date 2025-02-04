@@ -106,8 +106,8 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
           </div>
         </div>
 
-        <ChartContainer config={chartConfig} className="aspect-video">
-          <PieChart width={400} height={300}>
+        <ChartContainer config={chartConfig} className="border w-full h-full">
+          <PieChart className="w-full h-full">
             <Legend
               layout="vertical"
               align="right"
