@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { debounce } from "lodash";
 import Search from "../search";
 import { kitchen } from "@/models/kitchen";
+import Loader from "../loader";
 
 const MapKitchen = () => {
   const [query, setQuery] = useState("");
@@ -19,7 +20,7 @@ const MapKitchen = () => {
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["kitchens", query, limitParams],
     queryFn: () => kitchen.get(query, limitParams || ""),
   });
@@ -95,6 +96,7 @@ const MapKitchen = () => {
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
       <Search handleChange={handleSearchChange} />
+      <Loader showLoader={isLoading} />
     </>
   );
 };
