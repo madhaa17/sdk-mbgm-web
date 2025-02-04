@@ -25,8 +25,9 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
     queryFn: () =>
       school
         .getDetail(item)
-        .catch(() => toast.error("Detail info belum tersedia!")),
+        .catch(() => toast.error("Informasi tidak tersedia!")),
     enabled: !!item,
+    refetchOnWindowFocus: false,
   });
 
   return (
@@ -35,14 +36,15 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
         <>
           {data && (
             <>
-              <div className="z-20 absolute bottom-4 top-4 left-4 w-[23%]">
-                <div className="flex flex-col justify-between gap-4 h-full">
-                  <ModalSchool data={data as schoolDetail} />
+              <div className="z-20 absolute bottom-4 top-4 left-4 w-[23%] border">
+                <ModalSchool data={data as schoolDetail} />
+                {/* <div className="flex flex-col justify-between gap-4 h-full">
+                  
                   <CardAllergy data={data as schoolDetail} />
-                </div>
+                </div> */}
               </div>
 
-              <div className="absolute z-20 bottom-4 left-[calc(23%+2rem)] right-4">
+              <div className="absolute z-20 bottom-4 left-[calc(23%+2rem)] right-4 h-[27%]">
                 <ChartImt data={data as schoolDetail} />
               </div>
 

@@ -43,7 +43,7 @@ const ChartImt = ({ data }: { data: schoolDetail }) => {
   }));
 
   return (
-    <Card className="w-full rounded-2xl bg-card/70 h-[225px]">
+    <Card className="w-full rounded-2xl bg-card/70 h-full">
       <CardContent className="h-full px-0 py-0">
         <ChartContainer config={chartConfig} className="h-full w-full">
           <LineChart

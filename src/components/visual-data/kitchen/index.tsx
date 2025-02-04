@@ -23,8 +23,9 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
     queryFn: () =>
       kitchen
         .getDetail(item)
-        .catch(() => toast.error("Detail info belum tersedia!")),
+        .catch(() => toast.error("Informasi tidak tersedia!")),
     enabled: !!item,
+    refetchOnWindowFocus: false,
   });
 
   return (

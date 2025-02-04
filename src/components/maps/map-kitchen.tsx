@@ -23,6 +23,7 @@ const MapKitchen = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["kitchens", query, limitParams],
     queryFn: () => kitchen.get(query, limitParams || ""),
+    refetchOnWindowFocus: false,
   });
 
   const position = [-2.5489, 118.0149];

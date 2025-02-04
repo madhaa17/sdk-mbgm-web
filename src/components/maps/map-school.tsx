@@ -33,6 +33,7 @@ const MapSchool = () => {
   const { data: schools, isLoading } = useQuery({
     queryKey: ["schools", query, limitParams],
     queryFn: () => school.get(query, limitParams || ""),
+    refetchOnWindowFocus: false,
   });
 
   const position = [-2.5489, 118.0149];
