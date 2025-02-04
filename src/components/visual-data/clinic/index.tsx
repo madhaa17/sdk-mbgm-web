@@ -1,6 +1,8 @@
 import React from "react";
 import CardClinic from "./card-clinic";
 import CardDashboard from "./card-dashboard";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 interface VisualDataProps {
   open: boolean;
@@ -25,6 +27,12 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
           <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4">
             <CardDashboard />
           </div>
+          <Button
+            onClick={() => onOpenChange(false)}
+            variant={"destructive"}
+            className="font-medium absolute z-20 top-4 left-[calc(23dvw+1rem)] rounded-full h-10 w-10">
+            <X className="h-4 w-4" />
+          </Button>
         </>
       )}
     </>
