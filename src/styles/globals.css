@@ -99,3 +99,8 @@ body {
 .dark .leaflet-control-attribution {
   filter: invert(90%) hue-rotate(180deg) brightness(80%) contrast(90%);
 }
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-content-wrapper .leaflet-popup-content,
+.dark .leaflet-popup-tip-container {
+  filter: invert(100%);
+}

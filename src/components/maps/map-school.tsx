@@ -92,7 +92,7 @@ const MapSchool = () => {
                 color={color}
                 fillColor={color}>
                 <Popup>
-                  <div>
+                  <div className="text-primary-foreground">
                     <p>{item.school_name}</p>
                     <p>{item.school_category}</p>
                   </div>

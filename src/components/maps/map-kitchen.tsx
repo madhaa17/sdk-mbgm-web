@@ -77,10 +77,10 @@ const MapKitchen = () => {
                 color={"green"}
                 fillColor={"green"}>
                 <Popup>
-                  <div>
+                  <div className="text-primary-foreground">
                     <p>{item.kitchen_name}</p>
-                    <p>{item.kitchen_province}</p>
                     <p>{item.kitchen_address}</p>
+                    <p>{item.kitchen_province}</p>
                   </div>
                   <Button
                     onClick={() => handleMarkerClick(item.id)}
