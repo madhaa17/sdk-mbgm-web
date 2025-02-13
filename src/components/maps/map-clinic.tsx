@@ -13,6 +13,7 @@ import Search from "../search";
 import { useSearchParams } from "next/navigation";
 import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
+import VisualDataHomeClinic from "../visual-data/home/clinic";
 
 const MapClinic = () => {
   const position = [-2.5489, 118.0149];
@@ -92,6 +93,7 @@ const MapClinic = () => {
         </MarkerClusterGroup>
       </MapContainer>
       <VisualData onOpenChange={handleClose} open={open} item={item} />
+      {open ? <></> : <VisualDataHomeClinic />}
       <Search handleChange={handleSearchChange} />
       <Loader showLoader={isLoading} />
     </>

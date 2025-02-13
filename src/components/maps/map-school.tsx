@@ -13,6 +13,7 @@ import { school } from "@/models/school";
 import { debounce } from "lodash";
 import Search from "../search";
 import Loader from "../loader";
+import VisualDataHome from "../visual-data/home/school";
 
 const getMarkerColor = (totalImtNormalPct: number) => {
   if (totalImtNormalPct <= 0.5) {
@@ -109,6 +110,9 @@ const MapSchool = () => {
         </MarkerClusterGroup>
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
+
+      {open ? <></> : <VisualDataHome />}
+
       <Search handleChange={handleSearchChange} />
       <Loader showLoader={isLoading} />
     </>

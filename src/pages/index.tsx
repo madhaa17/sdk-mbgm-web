@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { useTabStore } from "@/stores/useTabStore";
 import Loader from "@/components/loader";
+import VisualDataHome from "@/components/visual-data/home/school";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
   ssr: false,

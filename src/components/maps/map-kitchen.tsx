@@ -13,6 +13,7 @@ import { debounce } from "lodash";
 import Search from "../search";
 import { kitchen } from "@/models/kitchen";
 import Loader from "../loader";
+import VisualDataHomeKitchen from "../visual-data/home/kitchen";
 
 const MapKitchen = () => {
   const [query, setQuery] = useState("");
@@ -96,6 +97,7 @@ const MapKitchen = () => {
         </MarkerClusterGroup>
       </MapContainer>
       <VisualData item={item} open={open} onOpenChange={handleClose} />
+      {open ? <></> : <VisualDataHomeKitchen />}
       <Search handleChange={handleSearchChange} />
       <Loader showLoader={isLoading} />
     </>
