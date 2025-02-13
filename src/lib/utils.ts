@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import moment from "moment";
 
 type LatLngTuple = [number, number];
 
@@ -17,16 +18,9 @@ export const parseCoordinates = (input: string): LatLngTuple => {
 };
 
 export const formatTime = (timeString: string) => {
-  if (!timeString) {
-    return "";
-  }
+  const formattedTime = moment(timeString ?? "")
+    .utc()
+    .format("HH.mm");
 
-  const date = new Date(timeString);
-
-  date.setHours(date.getHours() + 7);
-
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  return `${hours}.${minutes}`;
+  return formattedTime;
 };
