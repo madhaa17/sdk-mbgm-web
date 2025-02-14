@@ -128,7 +128,7 @@ const ClinicDashboard = ({ item }: { item: any }) => {
           </>
         ) : (
           <>
-            <p>Data tidak tersedia!</p>
+            <p className="text-center text-red-500">Data tidak tersedia!</p>
           </>
         )}
       </CardContent>
