@@ -15,13 +15,15 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
   onOpenChange,
   item,
 }) => {
+  console.log({ item });
+
   return (
     <>
       {open && (
         <>
           <div className="z-20 absolute w-[23dvw] h-[100dvh] py-4 pl-4">
             <div className="flex flex-col justify-between gap-5 h-full">
-              <CardClinic />
+              <CardClinic item={item} />
             </div>
           </div>
           <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4">

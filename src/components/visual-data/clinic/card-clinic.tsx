@@ -47,7 +47,7 @@ const StatSection = ({
   );
 };
 
-const ClinicDashboard = () => {
+const ClinicDashboard = ({ item }: { item: any }) => {
   const ageData = [
     { label: "Balita", value: 4, color: "bg-blue-500" },
     { label: "Kanak-kanak", value: 2, color: "bg-pink-500" },
@@ -82,47 +82,55 @@ const ClinicDashboard = () => {
     { label: "PNS", value: 2, color: "bg-green-500" },
   ];
 
+  console.log({ item });
+
   return (
     <Card className="w-full bg-card/70 rounded-2xl h-full">
       <CardHeader>
-        <CardTitle>KLINIK MUHAMMADIYAH DARUL ARQAM</CardTitle>
+        <CardTitle>{item?.healthunit_name}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2 text-sm">
-          <p>Jl. Darul Arqam, Garut, Jawa Barat</p>
-          <p>darularqam@gmail.com</p>
-          <p>+62-8123-4568</p>
+          <p>{item?.healthunit_address}</p>
         </div>
 
-        <div className="space-y-2">
-          <p> Total: {101} Pasien</p>
-          <div className="w-full space-y-1">
-            <div className="w-full h-5 border flex">
-              <div
-                className="h-full bg-primary"
-                style={{
-                  width: `${(48 / 101) * 100}%`,
-                }}></div>
-              <div
-                className="h-full bg-[#FF0CA6]"
-                style={{
-                  width: `${(53 / 101) * 100}%`,
-                }}></div>
+        {item?.id === 24296 ? (
+          <>
+            <div className="space-y-2">
+              <p> Total: {101} Pasien</p>
+              <div className="w-full space-y-1">
+                <div className="w-full h-5 border flex">
+                  <div
+                    className="h-full bg-primary"
+                    style={{
+                      width: `${(48 / 101) * 100}%`,
+                    }}></div>
+                  <div
+                    className="h-full bg-[#FF0CA6]"
+                    style={{
+                      width: `${(53 / 101) * 100}%`,
+                    }}></div>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <p>Laki-laki: {48}</p>
+                  <p>Perempuan: {53}</p>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between items-center text-xs">
-              <p>Laki-laki: {48}</p>
-              <p>Perempuan: {53}</p>
-            </div>
-          </div>
-        </div>
 
-        <div className="space-y-2">
-          <StatSection title="Berdasarkan Umur" data={ageData} />
-          <StatSection title="Berdasarkan Keluhan" data={complaintData} />
-          <StatSection title="Berdasarkan Kunjungan" data={visitData} />
-          <StatSection title="Berdasarkan Diagnosis" data={diagnosisData} />
-          <StatSection title="Berdasarkan Pekerjaan" data={jobData} />
-        </div>
+            <div className="space-y-2">
+              <StatSection title="Berdasarkan Umur" data={ageData} />
+              <StatSection title="Berdasarkan Keluhan" data={complaintData} />
+              <StatSection title="Berdasarkan Kunjungan" data={visitData} />
+              <StatSection title="Berdasarkan Diagnosis" data={diagnosisData} />
+              <StatSection title="Berdasarkan Pekerjaan" data={jobData} />
+            </div>
+          </>
+        ) : (
+          <>
+            <p>Data tidak tersedia!</p>
+          </>
+        )}
       </CardContent>
     </Card>
   );

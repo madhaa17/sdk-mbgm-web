@@ -82,7 +82,7 @@ const MapClinic = () => {
                     <p>{item.healthunit_address}</p>
                   </div>
                   <Button
-                    onClick={() => handleMarkerClick(item.id)}
+                    onClick={() => handleMarkerClick(item)}
                     className="w-full">
                     Detail Info
                   </Button>
