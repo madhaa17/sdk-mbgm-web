@@ -24,8 +24,6 @@ const MealProcessCard = ({ data }: { data: KitchenDetail }) => {
     setSelectedBatch(selected as any);
   };
 
-  console.log({ selectedBatch });
-
   return (
     <Card className="rounded-2xl p-4 w-full bg-card/70 h-[225px]">
       <CardContent className="flex justify-between gap-4 ">

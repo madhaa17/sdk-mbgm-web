@@ -53,7 +53,6 @@ export default function LoginPage() {
       return auth.login(values);
     },
     onSuccess: (res) => {
-      console.log({ res });
       apiToken.set(res?.token as string);
       router.push("/dashboard");
     },

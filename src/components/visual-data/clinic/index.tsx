@@ -15,8 +15,6 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
   onOpenChange,
   item,
 }) => {
-  console.log({ item });
-
   return (
     <>
       {open && (

@@ -82,8 +82,6 @@ const ClinicDashboard = ({ item }: { item: any }) => {
     { label: "PNS", value: 2, color: "bg-green-500" },
   ];
 
-  console.log({ item });
-
   return (
     <Card className="w-full bg-card/70 rounded-2xl h-full">
       <CardHeader>
