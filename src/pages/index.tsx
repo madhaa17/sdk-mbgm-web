@@ -14,15 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Lock, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const loginSchema = z.object({
   email: z
@@ -35,6 +30,7 @@ const loginSchema = z.object({
 
 export default function LoginPage() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -64,18 +60,27 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-card">
-      <Card className="w-full max-w-md shadow-xl rounded-2xl">
+      <Card className="w-full max-w-md rounded-2xl border">
         <CardHeader>
           <CardTitle>Login</CardTitle>
         </CardHeader>
 
         <div className="flex justify-center mt-4">
-          <Image
-            src={"/assets/images/logo-2.png"}
-            alt="logo"
-            width={150}
-            height={150}
-          />
+          {theme === "light" ? (
+            <Image
+              src={"/assets/images/logo-bg-white.png"}
+              alt="logo"
+              width={150}
+              height={150}
+            />
+          ) : (
+            <Image
+              src={"/assets/images/logo-2.png"}
+              alt="logo"
+              width={150}
+              height={150}
+            />
+          )}
         </div>
 
         <CardContent className="p-6 space-y-4">
