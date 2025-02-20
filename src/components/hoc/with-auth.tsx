@@ -1,28 +1,33 @@
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../loader";
 
 const withAuth = (WrappedComponent: React.ComponentType) => {
   const AuthComponent = (props: any) => {
-    const { data: session, status } = useSession();
+    const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-      if (status === "unauthenticated") {
-        router.push("/");
-      }
-    }, [status, router]);
+      const token = localStorage.getItem("authToken");
 
-    if (status === "loading") {
+      if (!token) {
+        router.push("/"); // Redirect if token is missing
+      } else {
+        setIsAuthenticated(true);
+      }
+      setIsLoading(false);
+    }, [router]);
+
+    if (isLoading) {
       return <Loader showLoader={true} />;
     }
 
-    if (status === "authenticated") {
-      return <WrappedComponent {...props} session={session} />;
+    if (isAuthenticated) {
+      return <WrappedComponent {...props} />;
     }
 
-    return null;
+    return null; // Prevent rendering if not authenticated
   };
 
   return AuthComponent;

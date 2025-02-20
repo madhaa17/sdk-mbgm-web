@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { Card } from "./ui/card";
 import { useTabStore } from "@/stores/useTabStore";
 import ThemeToggle from "./theme-toggle";
+import Logout from "./logout";
 const Search = ({
   handleChange,
 }: {
@@ -32,6 +33,7 @@ const Search = ({
         onChange={handleChange}
       />
       <ThemeToggle />
+      <Logout />
     </Card>
   );
 };

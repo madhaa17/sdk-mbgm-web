@@ -1,4 +1,3 @@
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,14 +17,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Lock, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import toast from "react-hot-toast";
+import { auth } from "@/models/auth";
+import { apiToken } from "@/models/api";
+import { AxiosError } from "axios";
 
 const loginSchema = z.object({
-  email: z
-    .string({ required_error: "Email harus diisi!" })
-    .email({ message: "Email tidak valid!" }),
-  password: z
-    .string({ required_error: "Password harus diisi!" })
-    .min(6, { message: "Password minimal 6 karakter!" }),
+  identifier: z
+    .string({ required_error: "Username atau email harus diisi!" })
+    .min(3, "Minimal 3 karakter")
+    .refine(
+      (val) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || /^[a-zA-Z0-9_]+$/.test(val),
+      {
+        message: "Masukkan username atau email yang valid",
+      }
+    ),
+  password: z.string({ required_error: "Password harus diisi!" }),
 });
 
 export default function LoginPage() {
@@ -35,22 +43,22 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      identifier: "",
       password: "",
     },
   });
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: z.infer<typeof loginSchema>) => {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email: values.email,
-        password: values.password,
-      });
-      return result;
+      return auth.login(values);
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log({ res });
+      apiToken.set(res?.token as string);
       router.push("/dashboard");
+    },
+    onError: (err) => {
+      toast.error(err.message);
     },
   });
 
@@ -88,16 +96,16 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="identifier"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Username / email</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                         <Input
-                          type="email"
-                          placeholder="Email"
+                          type="text"
+                          placeholder="Username / email"
                           className="pl-10"
                           {...field}
                         />
