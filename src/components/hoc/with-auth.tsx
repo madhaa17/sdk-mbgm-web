@@ -1,34 +1,66 @@
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Loader from "../loader";
 
-const withAuth = (WrappedComponent: React.ComponentType) => {
-  const AuthComponent = (props: any) => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+interface AuthGuardOptions {
+  requireAuth?: boolean;
+  requireGuest?: boolean;
+  redirectUrl?: string;
+}
+
+const withAuth = <P extends object>(
+  WrappedComponent: React.ComponentType<P>,
+  options: AuthGuardOptions = {}
+) => {
+  const {
+    requireAuth = true,
+    requireGuest = false,
+    redirectUrl = "/",
+  } = options;
+
+  const AuthComponent: React.FC<P> = (props) => {
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
-      const token = localStorage.getItem("authToken");
+      if (status === "loading") return;
 
-      if (!token) {
-        router.push("/"); // Redirect if token is missing
-      } else {
-        setIsAuthenticated(true);
+      const isAuthenticated = !!session;
+
+      if (requireAuth && !isAuthenticated) {
+        router.push(redirectUrl);
+        return;
       }
-      setIsLoading(false);
-    }, [router]);
 
-    if (isLoading) {
+      if (requireGuest && isAuthenticated) {
+        router.push("/dashboard");
+        return;
+      }
+    }, [session, status, router]);
+
+    if (status === "loading") {
       return <Loader showLoader={true} />;
     }
 
-    if (isAuthenticated) {
-      return <WrappedComponent {...props} />;
+    const isAuthenticated = !!session;
+
+    if (requireAuth && !isAuthenticated) {
+      return null;
     }
 
-    return null; // Prevent rendering if not authenticated
+    if (requireGuest && isAuthenticated) {
+      return null;
+    }
+
+    return <WrappedComponent {...props} />;
   };
+
+  // Preserve the display name for debugging
+  const wrappedComponentName =
+    WrappedComponent.displayName || WrappedComponent.name || "Component";
+
+  AuthComponent.displayName = `withAuth(${wrappedComponentName})`;
 
   return AuthComponent;
 };

@@ -18,9 +18,8 @@ import { Mail, Lock, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
-import { auth } from "@/models/auth";
-import { apiToken } from "@/models/api";
-import { AxiosError } from "axios";
+import { signIn } from "next-auth/react";
+import withAuth from "@/components/hoc/with-auth";
 
 const loginSchema = z.object({
   identifier: z
@@ -36,7 +35,7 @@ const loginSchema = z.object({
   password: z.string({ required_error: "Password harus diisi!" }),
 });
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
   const { theme } = useTheme();
 
@@ -50,14 +49,24 @@ export default function LoginPage() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: z.infer<typeof loginSchema>) => {
-      return auth.login(values);
+      const result = await signIn("credentials", {
+        redirect: false,
+        ...values,
+      });
+
+      if (!result?.ok) {
+        throw new Error(result?.error || "Login failed");
+      }
+
+      return result;
     },
-    onSuccess: (res) => {
-      apiToken.set(res?.token as string);
-      router.push("/dashboard");
+    onSuccess: () => {
+      router.push("/dashboard"); // Redirect setelah login sukses
     },
     onError: (err) => {
-      toast.error(err.message);
+      const errorMessage =
+        err instanceof Error ? err.message : "Invalid credentials";
+      toast.error(errorMessage); // Tampilkan error tanpa redirect
     },
   });
 
@@ -153,4 +162,10 @@ export default function LoginPage() {
       </Card>
     </div>
   );
-}
+};
+
+export default withAuth(LoginPage, {
+  requireAuth: false,
+  requireGuest: true,
+  redirectUrl: "/dashboard",
+});
