@@ -72,7 +72,7 @@ const MapClinic = () => {
             return (
               <CircleMarker
                 key={item.id}
-                center={parseCoordinates(item.healthunit_coordinate)}
+                center={parseCoordinates("0", "0")}
                 radius={10}
                 color={"green"}
                 fillColor={"green"}>

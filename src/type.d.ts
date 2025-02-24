@@ -68,18 +68,13 @@ export interface schoolDetail {
 }
 
 export interface KitchenList {
-  id: number;
-  kitchen_address: string;
-  kitchen_province: string;
-  kitchen_city: string;
-  kitchen_subdistrict: string;
-  kitchen_coordinate: string;
+  kitchen_id: string;
   kitchen_name: string;
-  kitchen_rating: number;
-  kitchen_capacity_food: number;
-  kitchen_capacity_student: number;
-  kitchen_capacity_sku: number;
-  kitchen_school_ids: number;
+  kitchen_address: string;
+  kitchen_image: string;
+  kitchen_warehouse: string;
+  kitchen_latitude: string;
+  kitchen_longitude: string;
 }
 
 interface SchoolType {
@@ -143,20 +138,21 @@ export interface KitchenBatchType {
 }
 
 export interface KitchenDetail {
-  id: number;
-  kitchen_address: string;
-  kitchen_province: string;
-  kitchen_city: string;
-  kitchen_subdistrict: string;
-  kitchen_coordinate: string;
+  name: string;
+  owner: string;
+  creation: string;
+  modified: string;
+  modified_by: string;
+  docstatus: number;
+  idx: number;
+  naming_series: string;
   kitchen_name: string;
-  kitchen_rating: number;
-  kitchen_capacity_food: number;
-  kitchen_capacity_student: number;
-  kitchen_capacity_sku: number;
-  kitchen_school_ids: string;
-  school_list: SchoolType[];
-  kitchen_batchs: KitchenBatchType[];
+  kitchen_address: string;
+  kitchen_image: string;
+  kitchen_warehouse: string;
+  kitchen_latitude: string;
+  kitchen_longitude: string;
+  doctype: string;
 }
 
 export interface ClinicList {

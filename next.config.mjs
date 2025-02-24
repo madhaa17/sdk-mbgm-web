@@ -8,6 +8,14 @@ const withPWA = nextPWA({
 });
 
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "darul-arqam.mbgm.id",
+      },
+    ],
+  },
   reactStrictMode: true,
   ...withPWA,
 };

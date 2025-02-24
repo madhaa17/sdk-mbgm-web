@@ -1,11 +1,12 @@
 import React from "react";
 import CardKitchen from "./card-kitchen";
-import MealProcessCard from "./tracking";
+// import MealProcessCard from "./tracking";
 import { useQuery } from "@tanstack/react-query";
 import { kitchen } from "@/models/kitchen";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { KitchenDetail } from "@/type";
 
 interface VisualDataProps {
   open: boolean;
@@ -27,6 +28,8 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
     enabled: !!item,
   });
 
+  console.log({ data, item });
+
   return (
     <>
       {open && (
@@ -35,11 +38,11 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
             <>
               <div className="z-20 absolute w-[23dvw] h-[100dvh] py-4 pl-4">
                 <div className="flex flex-col justify-between gap-5 h-full">
-                  <CardKitchen data={data} />
+                  <CardKitchen data={data as KitchenDetail} />
                 </div>
               </div>
               <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4">
-                <MealProcessCard data={data} />
+                {/* <MealProcessCard data={data} /> */}
               </div>
               <Button
                 onClick={() => onOpenChange(false)}

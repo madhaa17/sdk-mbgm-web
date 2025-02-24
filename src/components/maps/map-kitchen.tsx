@@ -74,8 +74,11 @@ const MapKitchen = () => {
           {data?.map((item) => {
             return (
               <CircleMarker
-                key={item.id}
-                center={parseCoordinates(item.kitchen_coordinate)}
+                key={item.kitchen_id}
+                center={parseCoordinates(
+                  item.kitchen_latitude,
+                  item.kitchen_longitude
+                )}
                 radius={10}
                 color={"green"}
                 fillColor={"green"}>
@@ -83,10 +86,9 @@ const MapKitchen = () => {
                   <div className="text-primary-foreground">
                     <p>{item.kitchen_name}</p>
                     <p>{item.kitchen_address}</p>
-                    <p>{item.kitchen_province}</p>
                   </div>
                   <Button
-                    onClick={() => handleMarkerClick(item.id)}
+                    onClick={() => handleMarkerClick(item.kitchen_id)}
                     className="w-full">
                     Detail Info
                   </Button>
