@@ -14,26 +14,36 @@ import { debounce } from "lodash";
 import Search from "../search";
 import Loader from "../loader";
 import VisualDataHome from "../visual-data/home/school";
+import Link from "next/link";
+import { useTotal } from "@/stores/useTotal";
 
-const getMarkerColor = (totalImtNormalPct: number) => {
-  if (totalImtNormalPct <= 0.5) {
-    return "red";
-  } else if (totalImtNormalPct > 0.5 && totalImtNormalPct <= 0.7) {
-    return "orange";
-  } else {
-    return "green";
-  }
-};
+// const getMarkerColor = (totalImtNormalPct: number) => {
+//   if (totalImtNormalPct <= 0.5) {
+//     return "red";
+//   } else if (totalImtNormalPct > 0.5 && totalImtNormalPct <= 0.7) {
+//     return "orange";
+//   } else {
+//     return "green";
+//   }
+// };
 
 const MapSchool = () => {
   const [query, setQuery] = useState("");
+  const { setTotalSchool } = useTotal();
 
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
   const { data: schools, isLoading } = useQuery({
     queryKey: ["schools", query, limitParams],
-    queryFn: () => school.get(query, limitParams || ""),
+    queryFn: () =>
+      school.get(query, limitParams || "").then((res) => {
+        if (res) {
+          setTotalSchool(res.length);
+        }
+
+        return res;
+      }),
     refetchOnWindowFocus: false,
   });
 
@@ -82,24 +92,30 @@ const MapSchool = () => {
 
         <MarkerClusterGroup>
           {schools?.map((item) => {
-            const imtPct = parseFloat(item.imt_pct || "0");
-
-            const color = getMarkerColor(imtPct);
+            // const imtPct = parseFloat(item.imt_pct || "0");
+            // const color = getMarkerColor(imtPct);
 
             return (
               <CircleMarker
-                key={item.id}
-                center={parseCoordinates(item.school_coordinate)}
+                key={item.school_id}
+                center={parseCoordinates(
+                  item.school_latitude,
+                  item.school_longitude
+                )}
                 radius={10}
-                color={color}
-                fillColor={color}>
+                color={"blue"}
+                fillColor={"blue"}>
                 <Popup>
                   <div className="text-primary-foreground">
                     <p>{item.school_name}</p>
-                    <p>{item.school_category}</p>
+                    <p>{item.school_address}</p>
+                    <p>Tlp: {item.school_telp}</p>
+                    <Link href={item.school_website} target="_blank">
+                      <p className="text-blue-500">{item.school_website}</p>
+                    </Link>
                   </div>
                   <Button
-                    onClick={() => handleMarkerClick(item.id)}
+                    onClick={() => handleMarkerClick(item.school_id)}
                     className="w-full">
                     Detail Info
                   </Button>

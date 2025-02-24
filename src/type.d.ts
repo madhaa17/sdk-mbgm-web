@@ -1,6 +1,6 @@
 export interface ApiData<T> {
-  success: boolean;
-  message: string;
+  success?: boolean;
+  message?: string;
   data?: T;
   meta?: {
     total: number;
@@ -16,11 +16,20 @@ export interface ApiData<T> {
 }
 
 export interface SchoolList {
-  id: number;
+  school_id: string;
   school_name: string;
-  school_category: string;
-  school_coordinate: string;
-  imt_pct: string;
+  school_address: string;
+  school_website: string;
+  school_telp: string;
+  school_npsn: string;
+  school_latitude: string;
+  school_longitude: string;
+  b_school_type_pesantren: number;
+  b_school_type_paud: number;
+  b_school_type_sd: number;
+  b_school_type_smp: number;
+  b_school_type_sma: number;
+  b_school_type_smk: number;
 }
 
 interface ImtChartType {
@@ -33,39 +42,29 @@ interface ImtChartType {
 }
 
 export interface schoolDetail {
-  school_location_id: number;
-  school_address: string;
-  school_category: string;
-  school_npsn: "-";
-  school_phone: string;
-  school_detail_id: number;
+  name: string;
+  owner: string;
+  creation: string;
+  modified: string;
+  modified_by: string;
+  docstatus: number;
+  idx: number;
+  school_company: string;
   school_name: string;
-  total_student: number;
-  total_male: string;
-  total_female: string;
-  b_a1_egg: string;
-  b_a1_cow_milk: string;
-  b_a1_seafood: string;
-  b_a1_red_meat: string;
-  b_a2_fruit: string;
-  b_a2_vegetable: string;
-  b_a2_latex_fruit: string;
-  b_a3_sesame: string;
-  b_a3_herbs_spices: string;
-  b_a4_food_color: string;
-  b_a4_food_preservative: string;
-  b_a4_artificial_flavors: string;
-  b_a5_chocolate: string;
-  b_a5_breads_cakes: string;
-  b_a5_food_instant: string;
-  b_vegan: string;
-  imt_kurus_berat: string;
-  imt_kurus_ringan: string;
-  imt_normal: string;
-  imt_gemuk_ringan: string;
-  imt_obesitas: string;
-  imt_pct: string;
-  imt_chart: ImtChartType[];
+  school_npsn: string;
+  school_telp: string;
+  naming_series: string;
+  school_website: string;
+  school_address: string;
+  school_latitude: string;
+  school_longitude: string;
+  b_school_type_pesantren: number;
+  b_school_type_paud: number;
+  b_school_type_sd: number;
+  b_school_type_smp: number;
+  b_school_type_sma: number;
+  b_school_type_smk: number;
+  doctype: string;
 }
 
 export interface KitchenList {
@@ -166,4 +165,36 @@ export interface ClinicList {
   healthunit_category: null;
   healthunit_address: string;
   healthunit_coordinate: string;
+}
+
+export interface AllergiesType {
+  total_student: number;
+  total_student_male: number;
+  total_student_female: number;
+  total_b_a1_egg: number;
+  total_b_a1_cow_milk: number;
+  total_b_a1_red_meat: number;
+  total_b_a1_seafood: number;
+  total_b_a2_fruit: number;
+  total_b_a2_vegetable: number;
+  total_b_a2_latex: number;
+  total_b_a3_spice: number;
+  total_b_a3_sesame: number;
+  total_b_a4_food_coloring: number;
+  total_b_a4_food_preservative: number;
+  total_b_a4_artificial_flavoring: number;
+  total_b_a5_instant_food: number;
+  total_b_a5_chocolate: number;
+  total_b_a5_wheat: number;
+  total_b_vegan: number;
+}
+
+export interface ImtType {
+  total_student: number;
+  total_imt_kurus_berat: number;
+  total_imt_kurus_ringan: number;
+  total_imt_normal: number;
+  total_imt_gemuk_ringan: number;
+  total_imt_gemuk_berat: number;
+  updated_at: string;
 }

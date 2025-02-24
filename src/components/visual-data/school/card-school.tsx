@@ -7,12 +7,24 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { schoolDetail } from "@/type";
+import { ImtType, schoolDetail } from "@/type";
 
-const CardSchool = ({ data }: { data: schoolDetail }) => {
-  const total_students = 1100;
-  const total_male = Number(data.total_male);
-  const total_female = Number(data.total_female);
+const CardSchool = ({
+  data,
+  totalStudent,
+  studentMale,
+  studentFemale,
+  imtData,
+}: {
+  data: schoolDetail;
+  totalStudent: number;
+  studentMale: number;
+  studentFemale: number;
+  imtData: ImtType[];
+}) => {
+  const total_students = totalStudent;
+  const total_male = studentMale;
+  const total_female = studentFemale;
 
   const COLORS = [
     "hsl(var(--chart-1))",
@@ -25,23 +37,23 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
   const imt_data = [
     {
       name: "Kurus Ringan",
-      value: Number(data.imt_kurus_ringan),
+      value: imtData[0].total_imt_kurus_ringan,
     },
     {
       name: "Kurus Berat",
-      value: Number(data.imt_kurus_berat),
+      value: Number(imtData[0].total_imt_kurus_berat),
     },
     {
       name: "Normal",
-      value: Number(data.imt_normal),
+      value: Number(imtData[0].total_imt_normal),
     },
     {
       name: "Gemuk Ringan",
-      value: Number(data.imt_gemuk_ringan),
+      value: Number(imtData[0].total_imt_gemuk_ringan),
     },
     {
       name: "Obesitas",
-      value: Number(data.imt_obesitas),
+      value: Number(imtData[0].total_imt_gemuk_berat),
     },
   ];
 
@@ -79,13 +91,13 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
       <CardContent className="space-y-10">
         <div className="space-y-1">
           <p>NPSN: {data.school_npsn}</p>
-          <p>{data.school_category}</p>
           <p>{data.school_address}</p>
-          <p>tlp: {data.school_phone}</p>
+          <p>Tlp: {data.school_telp}</p>
+          <p>Web: {data.school_website ?? "-"}</p>
         </div>
 
         <div className="space-y-2">
-          <p> Total: {data.total_student} Siswa</p>
+          <p> Total: {total_students} Siswa</p>
           <div className="w-full space-y-1">
             <div className="w-full h-5 border flex">
               <div
@@ -143,7 +155,7 @@ const CardSchool = ({ data }: { data: schoolDetail }) => {
                         x={cx}
                         y={cy}
                         className="fill-primary-foreground text-3xl font-bold">
-                        {data.total_student}
+                        {total_students}
                       </tspan>
                       <tspan
                         x={cx}

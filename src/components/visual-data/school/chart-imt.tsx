@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis, Legend } from "recharts";
-import { schoolDetail } from "@/type";
+import { ImtType } from "@/type";
 import {
   ChartConfig,
   ChartContainer,
@@ -32,14 +32,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ChartImt = ({ data }: { data: schoolDetail }) => {
-  const chartData = data?.imt_chart?.map((item) => ({
+const ChartImt = ({ data }: { data: ImtType[] }) => {
+  const chartData = data?.map((item) => ({
     ...item,
-    imt_kurus_ringan: Number(item.imt_kurus_ringan),
-    imt_kurus_berat: Number(item.imt_kurus_berat),
-    imt_normal: Number(item.imt_normal),
-    imt_gemuk_ringan: Number(item.imt_gemuk_ringan),
-    imt_obesitas: Number(item.imt_obesitas),
+    imt_kurus_ringan: item.total_imt_kurus_ringan,
+    imt_kurus_berat: item.total_imt_kurus_berat,
+    imt_normal: item.total_imt_normal,
+    imt_gemuk_ringan: item.total_imt_gemuk_ringan,
+    imt_obesitas: item.total_imt_gemuk_berat,
   }));
 
   return (
@@ -58,7 +58,7 @@ const ChartImt = ({ data }: { data: schoolDetail }) => {
               iconType="circle"
             />
             <XAxis
-              dataKey="date"
+              dataKey="updated_at"
               tickLine={false}
               axisLine={false}
               tickMargin={8}

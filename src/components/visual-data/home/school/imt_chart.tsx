@@ -7,42 +7,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { imt } from "@/models/imt";
+import { useQuery } from "@tanstack/react-query";
 
 const ImtChart = () => {
-  const imt_chart = [
-    {
-      date: "Okt 2024",
-      imt_kurus_ringan: "193",
-      imt_kurus_berat: "127",
-      imt_normal: "657",
-      imt_gemuk_ringan: "49",
-      imt_obesitas: "73",
-    },
-    {
-      date: "Des 2024",
-      imt_kurus_ringan: "193",
-      imt_kurus_berat: "127",
-      imt_normal: "657",
-      imt_gemuk_ringan: "49",
-      imt_obesitas: "73",
-    },
-    {
-      date: "Jan 2025",
-      imt_kurus_ringan: "193",
-      imt_kurus_berat: "127",
-      imt_normal: "657",
-      imt_gemuk_ringan: "49",
-      imt_obesitas: "73",
-    },
-    {
-      date: "Feb 2025",
-      imt_kurus_ringan: "193",
-      imt_kurus_berat: "127",
-      imt_normal: "657",
-      imt_gemuk_ringan: "49",
-      imt_obesitas: "73",
-    },
-  ];
+  const { data: imtData } = useQuery({
+    queryKey: ["imt"],
+    queryFn: () => imt.get(),
+  });
 
   const chartConfig = {
     imt_kurus_ringan: {
@@ -67,13 +39,12 @@ const ImtChart = () => {
     },
   } satisfies ChartConfig;
 
-  const chartData = imt_chart?.map((item) => ({
-    ...item,
-    imt_kurus_ringan: Number(item.imt_kurus_ringan),
-    imt_kurus_berat: Number(item.imt_kurus_berat),
-    imt_normal: Number(item.imt_normal),
-    imt_gemuk_ringan: Number(item.imt_gemuk_ringan),
-    imt_obesitas: Number(item.imt_obesitas),
+  const chartData = imtData?.map((item) => ({
+    imt_kurus_ringan: item.total_imt_kurus_ringan,
+    imt_kurus_berat: item.total_imt_kurus_berat,
+    imt_normal: item.total_imt_normal,
+    imt_gemuk_ringan: item.total_imt_gemuk_ringan,
+    imt_obesitas: item.total_imt_gemuk_berat,
   }));
 
   return (
@@ -92,7 +63,7 @@ const ImtChart = () => {
               iconType="circle"
             />
             <XAxis
-              dataKey="date"
+              dataKey="updated_at"
               tickLine={false}
               axisLine={false}
               tickMargin={8}

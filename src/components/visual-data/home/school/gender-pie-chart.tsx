@@ -7,23 +7,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-const total_students = 1054000;
-const total_male = 526550;
-const total_female = 527450;
+import { useTotal } from "@/stores/useTotal";
 
 const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))"];
-
-const data = [
-  {
-    name: "Laki-laki",
-    value: total_male,
-  },
-  {
-    name: "Perempuan",
-    value: total_female,
-  },
-];
 
 const chartConfig = {
   total: {
@@ -40,6 +26,25 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const GenderPieChart = () => {
+  const { totalStudent, studentMale, studentFemale } = useTotal();
+
+  const total_students = totalStudent;
+  const total_male = studentMale;
+  const total_female = studentFemale;
+
+  console.log(total_male, total_female);
+
+  const data = [
+    {
+      name: "Laki-laki",
+      value: total_male,
+    },
+    {
+      name: "Perempuan",
+      value: total_female,
+    },
+  ];
+
   return (
     <Card className="rounded-2xl bg-card/70 h-full">
       <CardHeader>
