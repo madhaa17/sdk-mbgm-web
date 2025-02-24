@@ -22,8 +22,7 @@ export interface SchoolList {
   school_website: string;
   school_telp: string;
   school_npsn: string;
-  school_latitude: string;
-  school_longitude: string;
+  school_latlong: string;
   b_school_type_pesantren: number;
   b_school_type_paud: number;
   b_school_type_sd: number;
@@ -73,8 +72,7 @@ export interface KitchenList {
   kitchen_address: string;
   kitchen_image: string;
   kitchen_warehouse: string;
-  kitchen_latitude: string;
-  kitchen_longitude: string;
+  kitchen_latlong: string;
 }
 
 interface SchoolType {
@@ -137,6 +135,23 @@ export interface KitchenBatchType {
   akhir_end_at: string | null;
 }
 
+interface SchoolKitchenType {
+  name: string;
+  owner: string;
+  creation: string;
+  modified: string;
+  modified_by: string;
+  docstatus: number;
+  idx: number;
+  school_name: string;
+  max_portions: number;
+  parent: string;
+  parentfield: string;
+  parenttype: string;
+  doctype: string;
+  school_detail: schoolDetail;
+}
+
 export interface KitchenDetail {
   name: string;
   owner: string;
@@ -153,6 +168,7 @@ export interface KitchenDetail {
   kitchen_latitude: string;
   kitchen_longitude: string;
   doctype: string;
+  kitchen_schools: SchoolKitchenType[];
 }
 
 export interface ClinicList {

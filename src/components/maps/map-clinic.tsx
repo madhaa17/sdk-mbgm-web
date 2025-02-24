@@ -83,8 +83,8 @@ const MapClinic = () => {
                 key={item.healthunit_id}
                 center={coordinates}
                 radius={10}
-                color={"green"}
-                fillColor={"green"}>
+                color={"blue"}
+                fillColor={"blue"}>
                 <Popup>
                   <div className="text-primary-foreground">
                     <p>{item.healthunit_name}</p>

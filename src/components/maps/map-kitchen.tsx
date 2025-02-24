@@ -5,7 +5,7 @@ import React, { useCallback, useState } from "react";
 import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/kitchen";
-import { parseCoordinates } from "@/lib/utils";
+import { parseCoordinates, parseLatLong } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -81,20 +81,19 @@ const MapKitchen = () => {
 
         <MarkerClusterGroup>
           {data?.map((item) => {
-            const coordinates = parseCoordinates(
-              item.kitchen_latitude,
-              item.kitchen_longitude
-            );
+            const coordinates = parseLatLong(item.kitchen_latlong);
 
-            if (!coordinates) return null;
+            if (!coordinates) {
+              return null;
+            }
 
             return (
               <CircleMarker
                 key={item.kitchen_id}
                 center={coordinates}
                 radius={10}
-                color={"green"}
-                fillColor={"green"}>
+                color={"blue"}
+                fillColor={"blue"}>
                 <Popup>
                   <div className="text-primary-foreground">
                     <p>{item.kitchen_name}</p>

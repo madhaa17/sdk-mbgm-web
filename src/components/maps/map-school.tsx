@@ -5,7 +5,7 @@ import React, { useCallback, useState } from "react";
 import { MapContainer, TileLayer, Popup, CircleMarker } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/school";
-import { parseCoordinates } from "@/lib/utils";
+import { parseLatLong } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -92,10 +92,7 @@ const MapSchool = () => {
 
         <MarkerClusterGroup>
           {schools?.map((item) => {
-            const coordinates = parseCoordinates(
-              item.school_latitude,
-              item.school_longitude
-            );
+            const coordinates = parseLatLong(item.school_latlong);
 
             if (!coordinates) {
               return null;

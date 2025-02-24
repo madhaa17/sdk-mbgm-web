@@ -43,3 +43,16 @@ export const formatTime = (timeString: string) => {
 
   return formattedTime;
 };
+
+export function parseLatLong(schoolLatLong: string): LatLngTuple | null {
+  const coordinates = schoolLatLong
+    .split(",")
+    .map((coord) => parseFloat(coord.trim()));
+
+  if (coordinates.length !== 2) {
+    console.warn(`Invalid coordinates detected -> ${schoolLatLong}`);
+    return null;
+  }
+
+  return coordinates as LatLngTuple;
+}

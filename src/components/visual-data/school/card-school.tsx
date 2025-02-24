@@ -34,28 +34,15 @@ const CardSchool = ({
     "hsl(var(--chart-5))",
   ];
 
-  const imt_data = [
-    {
-      name: "Kurus Ringan",
-      value: imtData[0].total_imt_kurus_ringan,
-    },
-    {
-      name: "Kurus Berat",
-      value: Number(imtData[0].total_imt_kurus_berat),
-    },
-    {
-      name: "Normal",
-      value: Number(imtData[0].total_imt_normal),
-    },
-    {
-      name: "Gemuk Ringan",
-      value: Number(imtData[0].total_imt_gemuk_ringan),
-    },
-    {
-      name: "Obesitas",
-      value: Number(imtData[0].total_imt_gemuk_berat),
-    },
-  ];
+  const imt_data = imtData
+    .map((imt) => [
+      { name: "Kurus Ringan", value: imt.total_imt_kurus_ringan },
+      { name: "Kurus Berat", value: imt.total_imt_kurus_berat },
+      { name: "Normal", value: imt.total_imt_normal },
+      { name: "Gemuk Ringan", value: imt.total_imt_gemuk_ringan },
+      { name: "Obesitas", value: imt.total_imt_gemuk_berat },
+    ])
+    .flat();
 
   const chartConfig = {
     total: {
@@ -118,7 +105,7 @@ const CardSchool = ({
           </div>
         </div>
 
-        <ChartContainer config={chartConfig} className="w-full h-full">
+        <ChartContainer config={chartConfig} className="mx-auto aspect-auto">
           <PieChart className="w-full h-full">
             <Legend
               layout="vertical"
