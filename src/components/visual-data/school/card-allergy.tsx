@@ -37,7 +37,7 @@ const CardAllergy = ({ data }: { data: AllergiesType[] }) => {
   const vegetarian = dataItem?.total_b_vegan;
 
   const calculatePercentage = (value: number) => {
-    const total = dataItem?.total_student || 1;
+    const total = dataItem?.total_student ?? 0;
     return ((value / total) * 100).toFixed(2);
   };
 

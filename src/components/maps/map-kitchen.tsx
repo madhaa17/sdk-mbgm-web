@@ -81,13 +81,17 @@ const MapKitchen = () => {
 
         <MarkerClusterGroup>
           {data?.map((item) => {
+            const coordinates = parseCoordinates(
+              item.kitchen_latitude,
+              item.kitchen_longitude
+            );
+
+            if (!coordinates) return null;
+
             return (
               <CircleMarker
                 key={item.kitchen_id}
-                center={parseCoordinates(
-                  item.kitchen_latitude,
-                  item.kitchen_longitude
-                )}
+                center={coordinates}
                 radius={10}
                 color={"green"}
                 fillColor={"green"}>

@@ -70,13 +70,18 @@ const MapClinic = () => {
         />
         <MarkerClusterGroup>
           {dummyClinics?.map((item) => {
+            const coordinates = parseCoordinates(
+              item.healthunit_latitude,
+              item.healthunit_longitude
+            );
+
+            if (!coordinates) {
+              return null;
+            }
             return (
               <CircleMarker
                 key={item.healthunit_id}
-                center={parseCoordinates(
-                  item.healthunit_latitude,
-                  item.healthunit_longitude
-                )}
+                center={coordinates}
                 radius={10}
                 color={"green"}
                 fillColor={"green"}>

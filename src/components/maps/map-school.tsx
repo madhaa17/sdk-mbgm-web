@@ -92,16 +92,19 @@ const MapSchool = () => {
 
         <MarkerClusterGroup>
           {schools?.map((item) => {
-            // const imtPct = parseFloat(item.imt_pct || "0");
-            // const color = getMarkerColor(imtPct);
+            const coordinates = parseCoordinates(
+              item.school_latitude,
+              item.school_longitude
+            );
+
+            if (!coordinates) {
+              return null;
+            }
 
             return (
               <CircleMarker
                 key={item.school_id}
-                center={parseCoordinates(
-                  item.school_latitude,
-                  item.school_longitude
-                )}
+                center={coordinates}
                 radius={10}
                 color={"blue"}
                 fillColor={"blue"}>

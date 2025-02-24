@@ -32,34 +32,35 @@ const AllergyPieChart = () => {
   const dataItem = data?.[0];
 
   const animalProteinTotal =
-    (Number(dataItem?.total_b_a1_egg) || 0) +
-    (Number(dataItem?.total_b_a1_cow_milk) || 0) +
-    (Number(dataItem?.total_b_a1_seafood) || 0) +
-    (Number(dataItem?.total_b_a1_red_meat) || 0);
+    (dataItem?.total_b_a1_egg ?? 0) +
+    (dataItem?.total_b_a1_cow_milk ?? 0) +
+    (dataItem?.total_b_a1_red_meat ?? 0) +
+    (dataItem?.total_b_a1_seafood ?? 0);
 
   const plantProteinTotal =
-    (Number(dataItem?.total_b_a2_fruit) || 0) +
-    (Number(dataItem?.total_b_a2_vegetable) || 0) +
-    (Number(dataItem?.total_b_a2_latex) || 0);
+    (dataItem?.total_b_a2_fruit ?? 0) +
+    (dataItem?.total_b_a2_vegetable ?? 0) +
+    (dataItem?.total_b_a2_latex ?? 0);
 
   const spicesTotal =
-    (Number(dataItem?.total_b_a3_spice) || 0) +
-    (Number(dataItem?.total_b_a3_sesame) || 0);
+    (dataItem?.total_b_a3_sesame ?? 0) + (dataItem?.total_b_a3_spice ?? 0);
 
   const additiveTotal =
-    (Number(dataItem?.total_b_a4_food_coloring) || 0) +
-    (Number(dataItem?.total_b_a4_food_preservative) || 0) +
-    (Number(dataItem?.total_b_a4_artificial_flavoring) || 0);
+    (dataItem?.total_b_a4_food_coloring ?? 0) +
+    (dataItem?.total_b_a4_food_preservative ?? 0) +
+    (dataItem?.total_b_a4_artificial_flavoring ?? 0);
 
   const processedTotal =
-    (Number(dataItem?.total_b_a5_chocolate) || 0) +
-    (Number(dataItem?.total_b_a5_wheat) || 0) +
-    (Number(dataItem?.total_b_a5_instant_food) || 0);
+    (dataItem?.total_b_a5_chocolate ?? 0) +
+    (dataItem?.total_b_a5_instant_food ?? 0) +
+    (dataItem?.total_b_a5_wheat ?? 0);
 
-  const vegetarian = Number(dataItem?.total_b_vegan) || 0;
+  const vegetarian = dataItem?.total_b_vegan ?? 0;
 
-  const calculatePercentage = (value: number) =>
-    ((value / totalStudent) * 100).toFixed(2);
+  const calculatePercentage = (value: number) => {
+    if (!totalStudent || totalStudent === 0) return 0;
+    return ((value / totalStudent) * 100).toFixed(2);
+  };
 
   const categories = [
     {
