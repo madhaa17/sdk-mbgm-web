@@ -14,16 +14,25 @@ import Search from "../search";
 import { kitchen } from "@/models/kitchen";
 import Loader from "../loader";
 import VisualDataHomeKitchen from "../visual-data/home/kitchen";
+import { useTotal } from "@/stores/useTotal";
 
 const MapKitchen = () => {
   const [query, setQuery] = useState("");
+  const { setTotalKitchen } = useTotal();
 
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
   const { data, isLoading } = useQuery({
     queryKey: ["kitchens", query, limitParams],
-    queryFn: () => kitchen.get(query, limitParams || ""),
+    queryFn: () =>
+      kitchen.get(query, limitParams || "").then((res) => {
+        if (res) {
+          setTotalKitchen(res.length);
+        }
+
+        return res;
+      }),
     refetchOnWindowFocus: false,
   });
 

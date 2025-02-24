@@ -5,15 +5,16 @@ import React, { useCallback, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import VisualData from "../visual-data/clinic";
-import { clinic } from "@/models/clinic";
-import { useQuery } from "@tanstack/react-query";
-import Loader from "../loader";
+// import { clinic } from "@/models/clinic";
+// import { useQuery } from "@tanstack/react-query";
+// import Loader from "../loader";
 import { debounce } from "lodash";
 import Search from "../search";
 import { useSearchParams } from "next/navigation";
 import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
 import VisualDataHomeClinic from "../visual-data/home/clinic";
+import { dummyClinics } from "@/lib/dummy";
 
 const MapClinic = () => {
   const position = [-2.5489, 118.0149];
@@ -24,11 +25,11 @@ const MapClinic = () => {
   const searchParams = useSearchParams();
   const limitParams = searchParams.get("limit");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["clinics", query, limitParams],
-    queryFn: () => clinic.get(query, limitParams || ""),
-    refetchOnWindowFocus: false,
-  });
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["clinics", query, limitParams],
+  //   queryFn: () => clinic.get(query, limitParams || ""),
+  //   refetchOnWindowFocus: false,
+  // });
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -68,11 +69,14 @@ const MapClinic = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MarkerClusterGroup>
-          {data?.map((item) => {
+          {dummyClinics?.map((item) => {
             return (
               <CircleMarker
-                key={item.id}
-                center={parseCoordinates("0", "0")}
+                key={item.healthunit_id}
+                center={parseCoordinates(
+                  item.healthunit_latitude,
+                  item.healthunit_longitude
+                )}
                 radius={10}
                 color={"green"}
                 fillColor={"green"}>
@@ -95,7 +99,7 @@ const MapClinic = () => {
       <VisualData onOpenChange={handleClose} open={open} item={item} />
       {open ? <></> : <VisualDataHomeClinic />}
       <Search handleChange={handleSearchChange} />
-      <Loader showLoader={isLoading} />
+      {/* <Loader showLoader={isLoading} /> */}
     </>
   );
 };

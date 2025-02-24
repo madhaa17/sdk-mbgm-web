@@ -9,6 +9,8 @@ interface Total {
   studentFemale: number;
   setStudentMale: (std: number) => void;
   setStudentFemale: (std: number) => void;
+  totalKitchen: number;
+  setTotalKitchen: (std: number) => void;
 }
 
 export const useTotal = create<Total>((set) => ({
@@ -20,4 +22,6 @@ export const useTotal = create<Total>((set) => ({
   setStudentMale: (std) => set({ studentMale: std }),
   studentFemale: 0,
   setStudentFemale: (std) => set({ studentFemale: std }),
+  totalKitchen: 0,
+  setTotalKitchen: (std) => set({ totalKitchen: std }),
 }));

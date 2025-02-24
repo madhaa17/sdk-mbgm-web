@@ -28,8 +28,6 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
     enabled: !!item,
   });
 
-  console.log({ data, item });
-
   return (
     <>
       {open && (

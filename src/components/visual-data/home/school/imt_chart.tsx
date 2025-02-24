@@ -40,6 +40,7 @@ const ImtChart = () => {
   } satisfies ChartConfig;
 
   const chartData = imtData?.map((item) => ({
+    ...item,
     imt_kurus_ringan: item.total_imt_kurus_ringan,
     imt_kurus_berat: item.total_imt_kurus_berat,
     imt_normal: item.total_imt_normal,

@@ -156,11 +156,11 @@ export interface KitchenDetail {
 }
 
 export interface ClinicList {
-  id: number;
+  healthunit_id: string;
   healthunit_name: string;
-  healthunit_category: null;
   healthunit_address: string;
-  healthunit_coordinate: string;
+  healthunit_latitude: string;
+  healthunit_longitude: string;
 }
 
 export interface AllergiesType {
