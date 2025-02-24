@@ -8,7 +8,7 @@ const CardTotalClinic = () => {
         <CardTitle>Total Klinik</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl font-bold font-mono">3.334</p>
+        <p className="text-3xl font-bold font-mono">1</p>
       </CardContent>
     </Card>
   );

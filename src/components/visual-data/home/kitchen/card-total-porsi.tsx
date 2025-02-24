@@ -8,7 +8,7 @@ const CardTotalPorsi = () => {
         <CardTitle>Total Porsi</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl font-bold font-mono">3.000</p>
+        <p className="text-3xl font-bold font-mono">1.340</p>
       </CardContent>
     </Card>
   );
