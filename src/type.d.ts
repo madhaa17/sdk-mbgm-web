@@ -210,3 +210,30 @@ export interface ImtType {
   total_imt_gemuk_berat: number;
   updated_at: string;
 }
+
+export interface MenuType {
+  menu_id: string;
+  menu_name: string;
+  required_by: string;
+}
+
+export interface KitchenStock {
+  item_code: string;
+  warehouse: string;
+  item_group: string;
+  company: string;
+  currency: number;
+  stock_uom: string;
+  item_name: string;
+  opening_qty: number;
+  opening_val: number;
+  opening_fifo_queue: [];
+  in_qty: number;
+  in_val: number;
+  out_qty: number;
+  out_val: number;
+  bal_qty: number;
+  bal_val: number;
+  val_rate: number;
+  reserved_stock: number;
+}

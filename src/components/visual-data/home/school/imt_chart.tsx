@@ -15,7 +15,7 @@ const dummyData = [
     id: "dummy-1",
     total_student: 1103,
     total_imt_kurus_berat: 130,
-    total_imt_kurus_ringan: 200,
+    total_imt_kurus_ringan: 163,
     total_imt_normal: 700,
     total_imt_gemuk_ringan: 40,
     total_imt_gemuk_berat: 70,

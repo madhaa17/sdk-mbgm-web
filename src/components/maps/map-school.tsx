@@ -108,11 +108,18 @@ const MapSchool = () => {
                 <Popup>
                   <div className="text-primary-foreground">
                     <p>{item.school_name}</p>
-                    <p>{item.school_address}</p>
-                    <p>Tlp: {item.school_telp}</p>
-                    <Link href={item.school_website} target="_blank">
-                      <p className="text-blue-500">{item.school_website}</p>
-                    </Link>
+                    <p>Alamat: {item.school_address ?? "-"}</p>
+                    <p>Tlp: {item.school_telp ?? "-"}</p>
+                    <p>
+                      Web:{" "}
+                      {item.school_website ? (
+                        <Link href={item.school_website} target="_blank">
+                          {item.school_website}
+                        </Link>
+                      ) : (
+                        "-"
+                      )}
+                    </p>
                   </div>
                   <Button
                     onClick={() => handleMarkerClick(item.school_id)}

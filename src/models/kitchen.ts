@@ -15,4 +15,11 @@ export const kitchen = {
     api
       .get<ApiData<KitchenDetail>>(`/api/v1/mbgm/kitchens/${id}`)
       .then((res) => res.data.data),
+
+  getStock: (id: string) =>
+    api
+      .get<ApiData<KitchenDetail>>(
+        `/api/v1/mbgm/kitchen-stocks?kitchen_id=${id}`
+      )
+      .then((res) => res.data.data),
 };

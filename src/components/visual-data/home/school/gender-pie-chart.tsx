@@ -32,8 +32,6 @@ const GenderPieChart = () => {
   const total_male = studentMale;
   const total_female = studentFemale;
 
-  console.log(total_male, total_female);
-
   const data = [
     {
       name: "Laki-laki",

@@ -74,11 +74,13 @@ const VisualDataSchool: React.FC<VisualDataProps> = ({
                     studentFemale={total.total_female}
                     imtData={imtData as ImtType[]}
                   />
-                  <CardAllergy data={allergyData as AllergiesType[]} />
+                  <div className="h-full max-h-[30%]">
+                    <CardAllergy data={allergyData as AllergiesType[]} />
+                  </div>
                 </div>
               </div>
 
-              <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4 h-[25%]">
+              <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4 h-[29%]">
                 <ChartImt data={imtData as ImtType[]} />
               </div>
 

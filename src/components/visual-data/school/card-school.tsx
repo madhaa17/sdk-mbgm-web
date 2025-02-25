@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { ImtType, schoolDetail } from "@/type";
+import Link from "next/link";
 
 const CardSchool = ({
   data,
@@ -34,15 +35,13 @@ const CardSchool = ({
     "hsl(var(--chart-5))",
   ];
 
-  const imt_data = imtData
-    .map((imt) => [
-      { name: "Kurus Ringan", value: imt.total_imt_kurus_ringan },
-      { name: "Kurus Berat", value: imt.total_imt_kurus_berat },
-      { name: "Normal", value: imt.total_imt_normal },
-      { name: "Gemuk Ringan", value: imt.total_imt_gemuk_ringan },
-      { name: "Obesitas", value: imt.total_imt_gemuk_berat },
-    ])
-    .flat();
+  const imt_data = (imtData || [])?.flatMap((imt) => [
+    { name: "Kurus Ringan", value: imt.total_imt_kurus_ringan },
+    { name: "Kurus Berat", value: imt.total_imt_kurus_berat },
+    { name: "Normal", value: imt.total_imt_normal },
+    { name: "Gemuk Ringan", value: imt.total_imt_gemuk_ringan },
+    { name: "Obesitas", value: imt.total_imt_gemuk_berat },
+  ]);
 
   const chartConfig = {
     total: {
@@ -78,9 +77,18 @@ const CardSchool = ({
       <CardContent className="space-y-10">
         <div className="space-y-1">
           <p>NPSN: {data.school_npsn}</p>
-          <p>{data.school_address}</p>
+          <p>Alamat: {data.school_address}</p>
           <p>Tlp: {data.school_telp}</p>
-          <p>Web: {data.school_website ?? "-"}</p>
+          <p>
+            Web:{" "}
+            {data.school_website ? (
+              <Link href={data.school_website} target="_blank">
+                {data.school_website}
+              </Link>
+            ) : (
+              "-"
+            )}
+          </p>
         </div>
 
         <div className="space-y-2">
@@ -105,7 +113,7 @@ const CardSchool = ({
           </div>
         </div>
 
-        <ChartContainer config={chartConfig} className="mx-auto aspect-auto">
+        <ChartContainer config={chartConfig} className="w-full h-full">
           <PieChart className="w-full h-full">
             <Legend
               layout="vertical"

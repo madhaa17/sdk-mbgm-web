@@ -119,7 +119,7 @@ const CardAllergy = ({ data }: { data: AllergiesType[] }) => {
                 <TooltipTrigger asChild>
                   <div className="w-1/2 h-4 bg-muted overflow-hidden">
                     <div
-                      className="h-full bg-yellow-400"
+                      className="h-full bg-chart-3"
                       style={{
                         width: `${category.value}%`,
                         display: "flex",

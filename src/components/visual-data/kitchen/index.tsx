@@ -6,7 +6,9 @@ import { kitchen } from "@/models/kitchen";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
-import { KitchenDetail } from "@/type";
+import { KitchenDetail, KitchenStock, MenuType } from "@/type";
+import MealProcessCard from "./tracking";
+import { menu } from "@/models/menu";
 
 interface VisualDataProps {
   open: boolean;
@@ -28,19 +30,36 @@ const VisualDataKitchen: React.FC<VisualDataProps> = ({
     enabled: !!item,
   });
 
+  const today = new Date().toISOString().slice(0, 10);
+
+  const { data: menuData } = useQuery({
+    queryKey: ["menu", item, today],
+    queryFn: () => menu.get(item, today),
+    enabled: !!item,
+  });
+
+  const { data: stockData } = useQuery({
+    queryKey: ["stock", item],
+    queryFn: () => kitchen.getStock(item),
+    enabled: !!item,
+  });
+
   return (
     <>
       {open && (
         <>
-          {data && (
+          {data && stockData && (
             <>
               <div className="z-20 absolute w-[23dvw] h-[100dvh] py-4 pl-4">
                 <div className="flex flex-col justify-between gap-5 h-full">
-                  <CardKitchen data={data as KitchenDetail} />
+                  <CardKitchen
+                    data={data as KitchenDetail}
+                    stock={stockData as any}
+                  />
                 </div>
               </div>
               <div className="absolute z-20 bottom-4 left-[calc(23dvw+1rem)] right-4">
-                {/* <MealProcessCard data={data} /> */}
+                <MealProcessCard data={menuData as MenuType[]} />
               </div>
               <Button
                 onClick={() => onOpenChange(false)}

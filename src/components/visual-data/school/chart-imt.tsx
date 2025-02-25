@@ -32,15 +32,39 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const dummyData = [
+  {
+    id: "dummy-1",
+    total_student: 1103,
+    total_imt_kurus_berat: 130,
+    total_imt_kurus_ringan: 163,
+    total_imt_normal: 700,
+    total_imt_gemuk_ringan: 40,
+    total_imt_gemuk_berat: 70,
+    updated_at: "2025-2",
+  },
+];
+
 const ChartImt = ({ data }: { data: ImtType[] }) => {
-  const chartData = data?.map((item) => ({
-    ...item,
-    imt_kurus_ringan: item.total_imt_kurus_ringan,
-    imt_kurus_berat: item.total_imt_kurus_berat,
-    imt_normal: item.total_imt_normal,
-    imt_gemuk_ringan: item.total_imt_gemuk_ringan,
-    imt_obesitas: item.total_imt_gemuk_berat,
-  }));
+  const chartData = [
+    ...(data?.map((item) => ({
+      ...item,
+      imt_kurus_ringan: item.total_imt_kurus_ringan,
+      imt_kurus_berat: item.total_imt_kurus_berat,
+      imt_normal: item.total_imt_normal,
+      imt_gemuk_ringan: item.total_imt_gemuk_ringan,
+      imt_obesitas: item.total_imt_gemuk_berat,
+    })) || []),
+
+    ...dummyData.map((item) => ({
+      ...item,
+      imt_kurus_ringan: item.total_imt_kurus_ringan,
+      imt_kurus_berat: item.total_imt_kurus_berat,
+      imt_normal: item.total_imt_normal,
+      imt_gemuk_ringan: item.total_imt_gemuk_ringan,
+      imt_obesitas: item.total_imt_gemuk_berat,
+    })),
+  ];
 
   return (
     <Card className="w-full rounded-2xl bg-card/70 h-full">
