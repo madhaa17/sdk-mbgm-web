@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import TanstackProvider from "@/components/tanstack-provider";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/components/theme-provider";
+import Head from "next/head";
 
 export default function App({
   Component,
@@ -17,6 +18,9 @@ export default function App({
         enableSystem
         disableTransitionOnChange>
         <TanstackProvider>
+          <Head>
+            <title>Dashboard Monitor MBGM</title>
+          </Head>
           <Component {...pageProps} />
           <Toaster position="top-center" />
         </TanstackProvider>
