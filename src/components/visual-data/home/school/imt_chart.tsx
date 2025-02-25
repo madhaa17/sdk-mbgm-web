@@ -19,7 +19,7 @@ const dummyData = [
     total_imt_normal: 700,
     total_imt_gemuk_ringan: 40,
     total_imt_gemuk_berat: 70,
-    updated_at: "2025-12",
+    updated_at: "2025-2",
   },
 ];
 
