@@ -35,10 +35,6 @@ const MapCooperative = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setItem(null);
-    setOpen(false);
-  };
 
   const handleMarkerClick = (e: any) => {
     handleOpen(e);
