@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { useTabStore } from "@/stores/useTabStore";
 import Loader from "@/components/loader";
 import withAuth from "@/components/hoc/with-auth";
-import MapCooperative from "@/components/maps/map-cooperative";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
   ssr: false,
@@ -18,6 +17,14 @@ const MapClinic = dynamic(() => import("@/components/maps/map-clinic"), {
   ssr: false,
   loading: () => <Loader showLoader={true} />,
 });
+
+const MapCooperative = dynamic(
+  () => import("@/components/maps/map-cooperative"),
+  {
+    ssr: false,
+    loading: () => <Loader showLoader={true} />,
+  }
+);
 
 const Home = () => {
   const { activeTab } = useTabStore();
