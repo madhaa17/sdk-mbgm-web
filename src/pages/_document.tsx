@@ -9,7 +9,7 @@ export default function Document() {
         <link rel="apple-touch-icon" href="/assets/images/logo.png" />
         <link rel="icon" href="/assets/images/logo-2.png" sizes="any" />
       </Head>
-      <body className="antialiased">
+      <body className="antialiased bg-background">
         <Main />
         <NextScript />
       </body>

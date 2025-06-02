@@ -7,8 +7,10 @@ import ThemeToggle from "./theme-toggle";
 import Logout from "./logout";
 const Search = ({
   handleChange,
+  disabled = false,
 }: {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }) => {
   const { activeTab, setActiveTab } = useTabStore();
 
@@ -25,12 +27,16 @@ const Search = ({
           <TabsTrigger className="w-full" value="clinic">
             Klinik
           </TabsTrigger>
+          <TabsTrigger className="w-full" value="cooperative">
+            Koperasi
+          </TabsTrigger>
         </TabsList>
       </Tabs>
       <Input
         placeholder="Cari lokasi..."
         className="w-full min-w-[300px]"
         onChange={handleChange}
+        disabled={disabled}
       />
       <ThemeToggle />
       <Logout />

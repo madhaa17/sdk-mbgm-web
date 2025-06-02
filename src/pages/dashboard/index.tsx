@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { useTabStore } from "@/stores/useTabStore";
 import Loader from "@/components/loader";
 import withAuth from "@/components/hoc/with-auth";
+import DashboardCooperative from "@/components/cooperative";
 
 const MapSchool = dynamic(() => import("@/components/maps/map-school"), {
   ssr: false,
@@ -27,6 +28,7 @@ const Home = () => {
         {activeTab === "school" && <MapSchool />}
         {activeTab === "kitchen" && <MapKitchen />}
         {activeTab === "clinic" && <MapClinic />}
+        {activeTab === "cooperative" && <DashboardCooperative />}
       </>
     </main>
   );
