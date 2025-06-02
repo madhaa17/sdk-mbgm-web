@@ -3,82 +3,99 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import Search from "../search";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
-const Dashboard = () => {
-  const employeeData = [
-    {
-      no: 1,
-      name: "Default",
-      percentage: 21,
-      count: 5,
-      color: "bg-[hsl(var(--chart-1))]",
-    },
-    {
-      no: 2,
-      name: "Harian",
-      percentage: 17,
-      count: 4,
-      color: "bg-[hsl(var(--chart-2))]",
-    },
-    {
-      no: 3,
-      name: "Opr/Staff",
-      percentage: 25,
-      count: 6,
-      color: "bg-[hsl(var(--chart-3))]",
-    },
-    {
-      no: 4,
-      name: "Foreman",
-      percentage: 4,
-      count: 1,
-      color: "bg-[hsl(var(--chart-4))]",
-    },
-    {
-      no: 5,
-      name: "Supervisor",
-      percentage: 0,
-      count: 0,
-      color: "bg-[hsl(var(--muted))]",
-    },
-    {
-      no: 6,
-      name: "Chief",
-      percentage: 8,
-      count: 2,
-      color: "bg-[hsl(var(--chart-5))]",
-    },
-    {
-      no: 7,
-      name: "Mgr",
-      percentage: 8,
-      count: 2,
-      color: "bg-[hsl(var(--chart-1))]",
-    },
-    {
-      no: 8,
-      name: "baru 5bln",
-      percentage: 4,
-      count: 1,
-      color: "bg-[hsl(var(--chart-2))]",
-    },
-    {
-      no: 9,
-      name: "baru 1 th",
-      percentage: 13,
-      count: 3,
-      color: "bg-[hsl(var(--chart-4))]",
-    },
-  ];
+const employeeData = [
+  {
+    no: 1,
+    name: "Default",
+    percentage: 21,
+    count: 5,
+    color: "bg-[hsl(var(--chart-1))]",
+  },
+  {
+    no: 2,
+    name: "Harian",
+    percentage: 17,
+    count: 4,
+    color: "bg-[hsl(var(--chart-2))]",
+  },
+  {
+    no: 3,
+    name: "Opr/Staff",
+    percentage: 25,
+    count: 6,
+    color: "bg-[hsl(var(--chart-3))]",
+  },
+  {
+    no: 4,
+    name: "Foreman",
+    percentage: 4,
+    count: 1,
+    color: "bg-[hsl(var(--chart-4))]",
+  },
+  {
+    no: 5,
+    name: "Supervisor",
+    percentage: 0,
+    count: 0,
+    color: "bg-[hsl(var(--muted))]",
+  },
+  {
+    no: 6,
+    name: "Chief",
+    percentage: 8,
+    count: 2,
+    color: "bg-[hsl(var(--chart-5))]",
+  },
+  {
+    no: 7,
+    name: "Mgr",
+    percentage: 8,
+    count: 2,
+    color: "bg-[hsl(var(--chart-1))]",
+  },
+  {
+    no: 8,
+    name: "baru 5bln",
+    percentage: 4,
+    count: 1,
+    color: "bg-[hsl(var(--chart-2))]",
+  },
+  {
+    no: 9,
+    name: "baru 1 th",
+    percentage: 13,
+    count: 3,
+    color: "bg-[hsl(var(--chart-4))]",
+  },
+];
 
+interface CooperativeInfoProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  item: any;
+}
+
+const CooperativeInfo = ({
+  open,
+  onOpenChange,
+  item,
+}: CooperativeInfoProps) => {
   return (
-    <div className="min-h-screen w-full">
-      {/* Header */}
-      <Search handleChange={(e) => console.log(e)} disabled />
-
-      <div className="px-6 pb-6 mt-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl h-[90vh] overflow-y-auto mt-10">
+        <DialogHeader className="text-primary-foreground">
+          <DialogTitle>{item?.healthunit_name}</DialogTitle>
+          <DialogDescription>{item?.healthunit_address}</DialogDescription>
+        </DialogHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card className="bg-gradient-to-br from-orange-400 to-orange-500 text-white">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg font-medium">
@@ -247,8 +264,8 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Employee Active Salary Table */}
-        <Card>
+        {/* Employee Table */}
+        <Card className="mt-6">
           <CardHeader className="bg-gradient-to-r from-slate-600 to-slate-700">
             <CardTitle className="text-white text-lg">
               Anggota Aktif Gaji Net
@@ -310,9 +327,9 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default Dashboard;
+export default CooperativeInfo;
