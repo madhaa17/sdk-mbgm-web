@@ -10,6 +10,7 @@ import { parseCoordinates } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { dummyCooperatives } from "@/lib/dummy";
 import CooperativeInfo from "../cooperative";
+import VisualDataHomeCooperative from "../visual-data/home/cooperative";
 
 const MapCooperative = () => {
   const position = [-2.5489, 118.0149];
@@ -90,6 +91,7 @@ const MapCooperative = () => {
       </MapContainer>
 
       <Search handleChange={handleSearchChange} />
+      <VisualDataHomeCooperative />
 
       <CooperativeInfo open={open} onOpenChange={setOpen} item={item} />
     </>
