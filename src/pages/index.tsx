@@ -61,12 +61,12 @@ const LoginPage = () => {
       return result;
     },
     onSuccess: () => {
-      router.push("/dashboard"); // Redirect setelah login sukses
+      router.push("/dashboard");
     },
     onError: (err) => {
       const errorMessage =
         err instanceof Error ? err.message : "Invalid credentials";
-      toast.error(errorMessage); // Tampilkan error tanpa redirect
+      toast.error(errorMessage);
     },
   });
 

@@ -17,16 +17,6 @@ import VisualDataHome from "../visual-data/home/school";
 import Link from "next/link";
 import { useTotal } from "@/stores/useTotal";
 
-// const getMarkerColor = (totalImtNormalPct: number) => {
-//   if (totalImtNormalPct <= 0.5) {
-//     return "red";
-//   } else if (totalImtNormalPct > 0.5 && totalImtNormalPct <= 0.7) {
-//     return "orange";
-//   } else {
-//     return "green";
-//   }
-// };
-
 const MapSchool = () => {
   const [query, setQuery] = useState("");
   const { setTotalSchool } = useTotal();

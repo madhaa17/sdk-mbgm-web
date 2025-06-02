@@ -1,32 +1,30 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { auth } from "@/models/auth";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        identifier: { label: "Email/Username", type: "text" },
+        identifier: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        try {
-          const response = await auth.login({
-            identifier: credentials?.identifier || "",
-            password: credentials?.password || "",
-          });
+        const username = credentials?.identifier;
+        const password = credentials?.password;
 
+        // Dummy check: hanya izinkan username dan password "admin"
+        if (username === "admin" && password === "admin") {
           return {
-            id: response.user.id.toString(),
-            email: response.user.email,
-            name: response.user.username,
-
-            accessToken: response.token,
+            id: "1",
+            email: "admin@example.com",
+            name: "Admin",
+            accessToken: "dummy-access-token", // token dummy
           };
-        } catch (error) {
-          return null;
         }
+
+        // Jika bukan admin: tolak login
+        return null;
       },
     }),
   ],
@@ -39,7 +37,6 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      // Menambahkan data custom ke session
       if (session.user) {
         session.user.id = token.id as string;
         session.accessToken = token.accessToken;
@@ -52,7 +49,7 @@ export default NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60, // 30 hari
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
