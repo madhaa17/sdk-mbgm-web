@@ -11,7 +11,7 @@ export const dummyClinics = [
 
 export const dummyCooperatives = [
   {
-    healthunit_id: "CU001",
+    healthunit_id: "CU001000",
     healthunit_name: "Koperasi Darul Arqam Garut",
     healthunit_address:
       "Jl. Garut - Tasikmalaya No.36, RT.001/RW.002, Ngamplangsari, Kec. Cilawu, Kabupaten Garut, Jawa Barat 44181",
